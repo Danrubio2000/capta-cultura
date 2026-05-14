@@ -1,0 +1,6 @@
+BUILD_TRIGGER_TIMESTAMP: 1778791620
+BUILD_ID: FORCE_VERCEL_REBUILD_NOW
+CRITICAL: This file forces Vercel to detect changes
+Generated: 2026-05-14 21:00:20 UTC
+Action: Force complete rebuild and cache clear
+Status: ALL FILES MUST BE UPDATED
