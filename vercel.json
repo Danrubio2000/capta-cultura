@@ -4,25 +4,17 @@
   "public": true,
   "builds": [
     {
-      "src": "server.js",
-      "use": "@vercel/node",
-      "config": {
-        "maxLambdaSize": "50mb"
-      }
+      "src": "server-simple.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "server.js"
-    },
-    {
       "src": "/(.*)",
-      "dest": "server.js"
+      "dest": "server-simple.js"
     }
   ],
   "env": {
     "NODE_ENV": "production"
-  },
-  "buildCommand": "echo 'Build: 2026-05-14 20:45' && node -v"
+  }
 }
