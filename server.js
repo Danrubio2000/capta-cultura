@@ -554,22 +554,28 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || SERVER_CONFIG?.PORT || 3000;
+// Initialize modules on startup
+await initializeModules();
 
-server.listen(PORT, async () => {
-  // Initialize modules asynchronously after server starts listening
-  await initializeModules();
+// Export for Vercel Serverless
+export default server;
 
-  console.log(`
+// Start server locally if not in Vercel
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || SERVER_CONFIG?.PORT || 3000;
+
+  server.listen(PORT, () => {
+    console.log(`
 ╔═══════════════════════════════════════════════════════════════╗
 ║                                                               ║
 ║          🚀 CAPTA - CULTURA v2.0.0 Iniciado                  ║
 ║                                                               ║
 ║  📱 Console: http://localhost:${PORT}                         ║
-║  🎯 Busca de Leads: /api/leads                               ║
+║  🎯 Busca de Fundações: /api/leads                            ║
 ║  📧 Campanhas: /api/campaigns                                 ║
 ║  🎨 Landing Pages: /api/pages                                ║
 ║                                                               ║
 ╚═══════════════════════════════════════════════════════════════╝
-  `);
-});
+    `);
+  });
+}
