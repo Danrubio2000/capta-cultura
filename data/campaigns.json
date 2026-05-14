@@ -1,0 +1,15 @@
+[
+  {
+    "id": "1778770889651",
+    "subject": "Teste CAPTA Leads",
+    "body": "Olá {nome},\n\nEste é um teste do CAPTA Leads!",
+    "fromEmail": "teste@capta.com",
+    "fromName": "CAPTA Test",
+    "recipients": [],
+    "createdAt": "2026-05-14T15:01:29.651Z",
+    "status": "draft",
+    "sentCount": 0,
+    "openedCount": 0,
+    "clickedCount": 0
+  }
+]

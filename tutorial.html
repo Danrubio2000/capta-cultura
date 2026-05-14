@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📚 Tutorial Completo - CAPTA CULTURA</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #FF6B6B 0%, #E74C3C 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    header h1 { font-size: 2em; margin-bottom: 10px; }
+    header p { opacity: 0.9; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+
+    .toc {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .toc h2 { margin-bottom: 20px; color: #E74C3C; }
+    .toc ul { list-style: none; }
+    .toc li { margin: 10px 0; }
+    .toc a {
+      color: #E74C3C;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .toc a:hover { text-decoration: underline; }
+
+    section {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      scroll-margin-top: 100px;
+    }
+
+    section h2 {
+      color: #E74C3C;
+      border-bottom: 3px solid #E74C3C;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    section h3 {
+      color: #FF6B6B;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .step {
+      background: #FFF5E6;
+      padding: 15px;
+      border-left: 4px solid #FF6B6B;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+
+    .step strong { color: #E74C3C; }
+
+    code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .button-demo {
+      background: #E74C3C;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .button-demo:hover {
+      background: #C0392B;
+    }
+
+    .note {
+      background: #E8F4F8;
+      border-left: 4px solid #3498DB;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+
+    .success {
+      background: #D4EDDA;
+      border-left: 4px solid #27AE60;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 30px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎬 Tutorial Completo - CAPTA CULTURA</h1>
+    <p>Encontre Financiadores para Seus Documentários, Filmes e Projetos de Arte</p>
+  </header>
+
+  <div class="container">
+    <div class="toc">
+      <h2>📋 Sumário</h2>
+      <ul>
+        <li>✓ <a href="#intro">Introdução</a></li>
+        <li>✓ <a href="#setup">Setup Inicial</a></li>
+        <li>✓ <a href="#busca">Buscar Fundações de Arte</a></li>
+        <li>✓ <a href="#campanhas">Enviar Proposta para Fundações</a></li>
+        <li>✓ <a href="#landing">Criar Landing Page do Projeto</a></li>
+        <li>✓ <a href="#dicas">Dicas para Aumentar Sucesso</a></li>
+        <li>✓ <a href="#exemplos">Exemplos por Área</a></li>
+        <li>✓ <a href="#faq">Perguntas Frequentes</a></li>
+      </ul>
+    </div>
+
+    <section id="intro">
+      <h2>🎯 Introdução</h2>
+      <p>
+        <strong>CAPTA CULTURA</strong> é a solução especializada para artistas, cineastas, documentaristas e criadores buscarem financiamento.
+      </p>
+
+      <h3>O que você pode fazer:</h3>
+      <ul style="margin-left: 20px;">
+        <li>🎬 Encontrar 50+ fundações que financiam documentários</li>
+        <li>🎨 Buscar patrocínio para projetos de arte</li>
+        <li>🎭 Encontrar produtores e co-financiadores</li>
+        <li>📸 Acessar editais de fotografia, vídeo arte, etc</li>
+        <li>🌍 Contatar fundações internacionais</li>
+        <li>📋 Gerenciar propostas e follow-ups</li>
+      </ul>
+
+      <div class="note">
+        <strong>💡 Este Tutorial:</strong> Vamos aprender a encontrar financiadores, enviar propostas profissionais e criar landing pages que convertem. Tempo: ~30 minutos.
+      </div>
+    </section>
+
+    <section id="setup">
+      <h2>⚙️ Setup Inicial (3 minutos)</h2>
+
+      <h3>Passo 1: Acessar o Console</h3>
+      <div class="step">
+        <strong>Abra:</strong> <code>http://localhost:3000</code><br>
+        Você verá o dashboard do CAPTA CULTURA.
+      </div>
+
+      <h3>Passo 2: Configurar Seu Perfil</h3>
+      <div class="step">
+        <strong>Vá em:</strong> ⚙️ Configurações → Email<br><br>
+        <strong>Preencha:</strong><br>
+        - Nome seu ou de sua organização<br>
+        - Email de resposta (aonde que devem responder)<br>
+        - Assinatura (seu nome + título)<br><br>
+        <strong>Exemplo:</strong><br>
+        "Maria Silva | Diretora de Documentários | maria@email.com"
+      </div>
+
+      <div class="success">
+        ✅ <strong>Pronto!</strong> Agora você pode procurar fundações.
+      </div>
+    </section>
+
+    <section id="busca">
+      <h2>🔍 Buscar Fundações de Arte (8 minutos)</h2>
+
+      <h3>Entender o Banco de Dados</h3>
+      <p>
+        CAPTA CULTURA tem um banco especializado com:
+      </p>
+      <ul style="margin-left: 20px;">
+        <li>🎬 <strong>Festival LGBTQ+:</strong> Frameline, Outfest, Inside Out</li>
+        <li>📽️ <strong>Documentário:</strong> ITVS, Sundance, Chicken & Egg</li>
+        <li>🎨 <strong>Arte Geral:</strong> Ford Foundation, Creative Capital</li>
+        <li>🌍 <strong>Fundações Brasileiras:</strong> Braspagem, Natura, Petrobrás</li>
+      </ul>
+
+      <h3>Passo 1: Ir para Busca de Leads</h3>
+      <div class="step">
+        Clique em: <strong>🎯 Buscar Leads</strong>
+      </div>
+
+      <h3>Passo 2: Preencher Critérios</h3>
+      <div class="step">
+        <strong>Exemplo 1: Documentário Social</strong><br>
+        - Palavras-chave: "documentary grant, social impact film"<br>
+        - Localização: "International" ou "USA"<br>
+        - Tipo: "Fundação"<br><br>
+
+        <strong>Exemplo 2: Cinema LGBTQ+</strong><br>
+        - Palavras-chave: "LGBTQ film grant, queer cinema"<br>
+        - Localização: "International"<br>
+        - Tipo: "Fundação"<br><br>
+
+        <strong>Exemplo 3: Arte Contemporânea</strong><br>
+        - Palavras-chave: "contemporary art grant, artist residency"<br>
+        - Localização: "Brasil" ou "Europa"<br>
+        - Tipo: "Fundação"
+      </div>
+
+      <h3>Passo 3: Analisar Resultados</h3>
+      <div class="step">
+        Para cada fundação, você vê:<br>
+        - <strong>Nome:</strong> Organização<br>
+        - <strong>Email:</strong> Contato direto<br>
+        - <strong>Score:</strong> Confiabilidade (0-100)<br>
+        - <strong>Website:</strong> Site oficial<br><br>
+        ✅ <strong>Score 80+:</strong> Excelente contato<br>
+        ⚠️ <strong>Score 50-79:</strong> Pesquisar mais<br>
+        ❌ <strong>Score 0-49:</strong> Verificar antes de contatar
+      </div>
+
+      <h3>Passo 4: Adicionar à Lista</h3>
+      <div class="step">
+        Clique em: <strong>➕ Adicionar</strong> para fundações que se encaixam no seu projeto.<br>
+        Essas irão para sua "Lista de Fundações Potenciais"
+      </div>
+
+      <div class="note">
+        <strong>💡 Dica de Pesquisa:</strong><br>
+        Faça 3-4 buscas diferentes com palavras-chave variadas. Você encontrará mais oportunidades!<br><br>
+        Busca 1: "documentary grant"<br>
+        Busca 2: "film funding europe"<br>
+        Busca 3: "independent cinema sponsor"<br>
+        Busca 4: "emerging filmmaker award"
+      </div>
+
+      <div class="success">
+        ✅ <strong>Fundações encontradas!</strong> Próximo: Enviar propostas.
+      </div>
+    </section>
+
+    <section id="campanhas">
+      <h2>📧 Enviar Propostas para Fundações (10 minutos)</h2>
+
+      <h3>Passo 1: Navegar para Campanhas</h3>
+      <div class="step">
+        Clique em: <strong>📧 Campanhas</strong>
+      </div>
+
+      <h3>Passo 2: Criar Proposta Profissional</h3>
+      <div class="step">
+        <strong>Assunto do Email:</strong><br>
+        ✅ "Proposta: Documentário [Título] - Busco Parceria"<br>
+        ❌ "Olá, preciso de financiamento"<br><br>
+
+        <strong>Corpo da Proposta:</strong> Personalize com {nome} e {empresa}<br><br>
+
+        <strong>Exemplo:</strong><br>
+        Prezados Senhores,<br><br>
+        Sou cineasta e meu documentário "[Título]" foi selecionado para o Festival de Sundance 2026.<br><br>
+        O projeto trata de [tema social/ambiental] e já conquistou [premio/reconhecimento].<br><br>
+        Gostaria de conversar com {empresa} sobre uma possível parceria para [etapa do projeto].<br><br>
+        Minha landing page: [link da página]<br><br>
+        Fico no aguardo,<br>
+        [Seu Nome]
+      </div>
+
+      <h3>Passo 3: Preencher Email</h3>
+      <div class="step">
+        - <strong>Assunto:</strong> Proposta: Documentário [Seu Título]<br>
+        - <strong>Corpo:</strong> (copie o exemplo acima, personalize)<br>
+        - <strong>Email de Origem:</strong> Seu email<br>
+        - <strong>Nome do Remetente:</strong> Seu nome
+      </div>
+
+      <h3>Passo 4: Enviar para Fundações</h3>
+      <div class="step">
+        <strong>1. Clique:</strong> "✉️ Criar Campanha"<br>
+        <strong>2. Aguarde:</strong> Campanha é criada<br>
+        <strong>3. Na tabela:</strong> Clique em "📧 Enviar"<br>
+        <strong>4. Resultado:</strong> Seu email é enviado para todas as fundações selecionadas
+      </div>
+
+      <h3>Passo 5: Follow-up (Importante!)</h3>
+      <div class="step">
+        <strong>Crie uma 2ª Campanha (3 dias depois):</strong><br><br>
+        Assunto: "Follow-up: [Seu Projeto] - Financiamento"<br><br>
+        Corpo:<br>
+        Olá {nome},<br><br>
+        Segue nossa proposta anterior sobre [projeto].<br>
+        Ficaria feliz em conversar e tirar dúvidas.<br><br>
+        Disponível para call essa semana.<br><br>
+        Abraços,<br>
+        [Seu Nome]<br><br>
+
+        <strong>Taxa de sucesso:</strong><br>
+        - 1 email: ~5% de resposta<br>
+        - 1 email + 1 follow-up: ~15% de resposta<br>
+        - 1 email + 2 follow-ups: ~25% de resposta
+      </div>
+
+      <div class="note">
+        <strong>🎬 Dicas para Fundações de Cinema:</strong>
+        <ul style="margin-left: 20px;">
+          <li>Sempre mencione prêmios, seleções em festivais</li>
+          <li>Mostre equipe (diretor, produtor, etc)</li>
+          <li>Explique o impacto social/artístico do filme</li>
+          <li>Se possível, inclua pré-vizualização ou trailer</li>
+        </ul>
+      </div>
+
+      <div class="success">
+        ✅ <strong>Propostas enviadas!</strong> Agora crie uma landing page profissional.
+      </div>
+    </section>
+
+    <section id="landing">
+      <h2>🎨 Criar Landing Page do Projeto (8 minutos)</h2>
+
+      <h3>Por que Uma Landing Page?</h3>
+      <p>
+        Fundações gostam de projetos sérios. Uma landing page mostra que você é profissional e comprometido.
+      </p>
+
+      <h3>Passo 1: Navegar para Landing Pages</h3>
+      <div class="step">
+        Clique em: <strong>🎨 Landing Pages</strong>
+      </div>
+
+      <h3>Passo 2: Criar Página para Seu Projeto</h3>
+      <div class="step">
+        <strong>Título:</strong> Nome do seu documentário/projeto<br>
+        Exemplo: "Documentário: Mudanças Climáticas no Brasil"<br><br>
+
+        <strong>Indústria:</strong> Cinema & Audiovisual<br><br>
+
+        <strong>SEO:</strong><br>
+        - Título: "[Seu Filme] - Documentário 2026"<br>
+        - Descrição: Uma linha sobre o filme<br>
+        - Keywords: "documentário, cinema, [tema]"
+      </div>
+
+      <h3>Passo 3: Estrutura Recomendada</h3>
+      <div class="step">
+        <strong>HERO (Seção Principal):</strong><br>
+        - Imagem/vídeo do filme<br>
+        - Headline: "[Título] - Documentário Que Faz Diferença"<br>
+        - Botão: "Conheça o Projeto" → seu email<br><br>
+
+        <strong>FEATURES (3 destaques):</strong><br>
+        - ⭐ Selecionado para [Festival]<br>
+        - ⭐ Tema: [Descrição do tema]<br>
+        - ⭐ Impacto: [O que o filme muda]<br><br>
+
+        <strong>TESTIMONIALS (Críticas):</strong><br>
+        - Críticos, jornalistas ou pessoas que viram<br>
+        - Cite publicações ("Folha de São Paulo", etc)<br><br>
+
+        <strong>CTA (Chamada Final):</strong><br>
+        - "Seja Produtor Executivo"<br>
+        - "Saiba Como Financiar"<br>
+        - Botão → link do seu email ou calendly
+      </div>
+
+      <h3>Passo 4: Exemplo Completo</h3>
+      <div class="step">
+        <strong>Projeto: Documentário sobre Mudanças Climáticas</strong><br><br>
+
+        <strong>Hero:</strong><br>
+        "🌍 Documentário: Mudanças Climáticas no Brasil"<br>
+        "Como comunidades indígenas estão salvando a Amazônia"<br><br>
+
+        <strong>Features:</strong><br>
+        ✓ Selecionado para Sundance 2026<br>
+        ✓ 3 anos de pesquisa em 5 estados<br>
+        ✓ Prêmio de Melhor Documentário - RioFilmFest 2025<br><br>
+
+        <strong>CTA:</strong><br>
+        "Seja Produtor Executivo - Patrocine por R$50.000+"<br>
+        Botão que manda email para sua fundação
+      </div>
+
+      <h3>Passo 5: Publicar e Compartilhar</h3>
+      <div class="step">
+        <strong>Clique "Ver"</strong> para gerar URL pública<br>
+        <strong>Copie o link</strong> e inclua nos emails para fundações<br>
+        <strong>Compartilhe também:</strong><br>
+        - Social media (Instagram, Facebook)<br>
+        - WhatsApp para produtores/colegas<br>
+        - LinkedIn (para contatos profissionais)
+      </div>
+
+      <div class="success">
+        ✅ <strong>Landing page criada!</strong> Agora você tem tudo pronto.
+      </div>
+    </section>
+
+    <section id="dicas">
+      <h2>💡 Dicas para Aumentar Sucesso</h2>
+
+      <h3>Antes de Enviar Propostas:</h3>
+      <div class="step">
+        <strong>✓ Pesquise a fundação:</strong> Site, editais anteriores, valores típicos<br>
+        <strong>✓ Personalize:</strong> Mostre que conhece o trabalho deles<br>
+        <strong>✓ Responda edital:</strong> Se houver edital, siga à risca<br>
+        <strong>✓ Tenha contato direto:</strong> Ligação antes é ouro
+      </div>
+
+      <h3>Na Proposta:</h3>
+      <div class="step">
+        <strong>✓ Seja claro:</strong> Qual é o filme? Qual é o valor? O que já existe?<br>
+        <strong>✓ Mostre viabilidade:</strong> Equipe experiente, cronograma realista<br>
+        <strong>✓ Impacto social:</strong> Por que isso importa? Quem vai ver?<br>
+        <strong>✓ Números:</strong> Orçamento detalhado, % já conseguido
+      </div>
+
+      <h3>Gestão de Propostas:</h3>
+      <div class="step">
+        <strong>✓ Rastreie:</strong> Anotar quem enviou, quando, resposta<br>
+        <strong>✓ Follow-up:</strong> Envie updates sobre o projeto<br>
+        <strong>✓ Tenha alternativas:</strong> Não dependa de 1 fundação<br>
+        <strong>✓ Documente tudo:</strong> Emails, contratos, reuniões
+      </div>
+    </section>
+
+    <section id="exemplos">
+      <h2>📚 Exemplos por Área</h2>
+
+      <h3>🎬 Documentarista</h3>
+      <div class="step">
+        <strong>Buscar:</strong> "documentary grant", "film funding", "social impact"<br>
+        <strong>Localização:</strong> International / USA / Europa<br>
+        <strong>Exemplo:</strong> Frameline, Sundance, ITVS, Ford Foundation
+      </div>
+
+      <h3>🎨 Artista Visual</h3>
+      <div class="step">
+        <strong>Buscar:</strong> "art grant", "artist residency", "contemporary art"<br>
+        <strong>Localização:</strong> Brasil / International<br>
+        <strong>Exemplo:</strong> Fundação Ibirapuera, Sesc, Petrobrás
+      </div>
+
+      <h3>🎭 Teatro / Performance</h3>
+      <div class="step">
+        <strong>Buscar:</strong> "theater grant", "performing arts", "performance art"<br>
+        <strong>Localização:</strong> São Paulo / Rio / International<br>
+        <strong>Exemplo:</strong> Braspagem, Natura, Cultura Inglesa
+      </div>
+
+      <h3>🎵 Músicos / Bandas</h3>
+      <div class="step">
+        <strong>Buscar:</strong> "music grant", "artist development", "festival"<br>
+        <strong>Localização:</strong> Brasil / América Latina<br>
+        <strong>Exemplo:</strong> SESC, Prêmio da Música Brasileira
+      </div>
+    </section>
+
+    <section id="faq">
+      <h2>❓ Perguntas Frequentes</h2>
+
+      <h3>P: Como saber se a fundação é legítima?</h3>
+      <div class="step">
+        <strong>R:</strong> Procure por:<br>
+        ✓ Website profissional<br>
+        ✓ Edital claro com prazos<br>
+        ✓ Histórico de projetos financiados<br>
+        ✓ CNPJ registrado no Brasil (ou equivalente no exterior)
+      </div>
+
+      <h3>P: Qual é a melhor época para solicitar?</h3>
+      <div class="step">
+        <strong>R:</strong> Varia por fundação. Dicas:<br>
+        ✓ Leia editais com atenção<br>
+        ✓ Envie cedo (não no deadline)<br>
+        ✓ Fundações brasileiras: geralmente 1-2 editais/ano<br>
+        ✓ Internacionais: editais abertos sempre
+      </div>
+
+      <h3>P: Posso pedir para múltiplas fundações ao mesmo tempo?</h3>
+      <div class="step">
+        <strong>R:</strong> Sim! Recomendado. Envie para 10-20 fundações. Estatisticamente, 1-2 respondem positivamente.
+      </div>
+
+      <h3>P: Qual é o valor médio de financiamento?</h3>
+      <div class="step">
+        <strong>R:</strong> Varia muito:<br>
+        💰 Documentário: R$30.000 - R$500.000<br>
+        🎨 Arte: R$5.000 - R$50.000<br>
+        🎭 Teatro: R$20.000 - R$200.000<br>
+        🎵 Música: R$10.000 - R$100.000
+      </div>
+
+      <h3>P: E se ninguém responder?</h3>
+      <div class="step">
+        <strong>R:</strong> Isso é normal! Taxa de resposta é ~5-10%. Dicas:<br>
+        ✓ Refine sua proposta<br>
+        ✓ Pesquise melhor as fundações<br>
+        ✓ Melhore sua landing page<br>
+        ✓ Tente novamente em próximo edital
+      </div>
+    </section>
+
+    <div style="background: #FFE6E6; padding: 30px; border-radius: 8px; margin: 40px 0; text-align: center;">
+      <h3 style="color: #E74C3C; margin-bottom: 15px;">🎉 Você está Pronto!</h3>
+      <p style="font-size: 1.1em; margin-bottom: 20px;">
+        Agora você tem tudo que precisa para encontrar financiadores para seu projeto cultural!<br><br>
+        <strong>Próximos Passos:</strong><br>
+        1️⃣ Faça sua primeira busca de fundações<br>
+        2️⃣ Crie sua landing page<br>
+        3️⃣ Envie propostas profissionais<br>
+        4️⃣ Acompanhe respostas e faça follow-up
+      </p>
+      <button class="button-demo" onclick="window.location.href='http://localhost:3000'">
+        🚀 Começar Agora
+      </button>
+    </div>
+  </div>
+
+  <footer>
+    <p><strong>CAPTA CULTURA - Tutorial Completo</strong></p>
+    <p>Desenvolvido com ❤️ para artistas, cineastas e criadores</p>
+    <p>Email: danrubio_2000@yahoo.com</p>
+  </footer>
+  <script src="chat-widget.js"></script>
+</body>
+</html>
