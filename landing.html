@@ -222,17 +222,20 @@
     </div>
 
     <div class="pricing">
+      <div id="test-badge" style="display:none; background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; color: #856404;">
+        ⚠️ MODO TESTE - ACESSO GRÁTIS ILIMITADO
+      </div>
       <h2>Mesmo Preço. Especializado para Arte.</h2>
       <div class="price-label">Plano Único</div>
-      <div class="price">R$80</div>
-      <p style="font-size: 1.2em; margin-bottom: 20px;">por mês</p>
+      <div id="price-display" class="price">R$80</div>
+      <p id="price-period" style="font-size: 1.2em; margin-bottom: 20px;">por mês</p>
       <p>✓ 50+ fundações de cinema/arte verificadas</p>
       <p>✓ Busca ilimitada de novos financiadores</p>
       <p>✓ Templates especializados para sua área</p>
       <p>✓ Campanhas de propostas em massa</p>
       <p>✓ Landing pages artísticas profissionais</p>
       <p>✓ Assistente IA para otimizar propostas</p>
-      <button class="cta-button" onclick="window.location.href='http://localhost:3000'">
+      <button id="cta-btn" class="cta-button" onclick="handleCTA()">
         🎬 Comece Sua Busca Agora
       </button>
     </div>
@@ -254,5 +257,25 @@
     <p><strong>CAPTA - CULTURA v2.0</strong> | Especializado em Financiamento de Projetos Artísticos</p>
     <p>Email: danrubio_2000@yahoo.com | Site: https://artver.com.br</p>
   </footer>
+
+  <script>
+    // Detect test mode
+    const params = new URLSearchParams(window.location.search);
+    const isTestMode = params.has('test') && params.get('test') === 'true';
+
+    if (isTestMode) {
+      // Show test badge
+      document.getElementById('test-badge').style.display = 'block';
+      document.getElementById('price-display').textContent = 'GRÁTIS';
+      document.getElementById('price-period').textContent = 'Acesso ilimitado';
+      document.getElementById('cta-btn').textContent = '✨ Acessar Teste Grátis';
+      localStorage.setItem('test_mode', 'true');
+    }
+
+    function handleCTA() {
+      const consoleUrl = window.location.origin + '/?test=' + (isTestMode ? 'true' : 'false');
+      window.location.href = consoleUrl;
+    }
+  </script>
 </body>
 </html>
