@@ -385,6 +385,22 @@ async function handleAPI(req, res, url, method) {
     if (action === "templates" && method === "GET") {
       return json(res, { templates: EMAIL_TEMPLATES });
     }
+
+    if (action === "console" && method === "GET") {
+      // Debug: Return console.html directly to test if Projects card is there
+      try {
+        const consoleContent = fs.readFileSync(path.join(__dirname, "console.html"), "utf8");
+        const hasProjectsCard = consoleContent.includes("Projects Card");
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({
+          hasProjectsCard,
+          fileSize: consoleContent.length,
+          timestamp: new Date().toISOString()
+        }));
+      } catch (e) {
+        return json(res, { error: e.message }, 500);
+      }
+    }
   }
 
   // 💳 PAYMENTS (Stripe)
@@ -526,7 +542,20 @@ const server = http.createServer(async (req, res) => {
 
     // Static files
     if (url.pathname === "/" || url.pathname === "/index.html") {
+      // Check if user wants to go directly to console (from splash or direct link)
+      if (url.search.includes("dashboard") || url.search.includes("novo")) {
+        return serveStatic(res, path.join(__dirname, "console.html"), "text/html");
+      }
+      // Otherwise show splash page first
+      return serveStatic(res, path.join(__dirname, "splash.html"), "text/html");
+    }
+
+    if (url.pathname === "/console.html") {
       return serveStatic(res, path.join(__dirname, "console.html"), "text/html");
+    }
+
+    if (url.pathname === "/splash.html") {
+      return serveStatic(res, path.join(__dirname, "splash.html"), "text/html");
     }
 
     if (url.pathname === "/tutorial.html") {

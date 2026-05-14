@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAPTA CULTURA - Bem-vindo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background: linear-gradient(135deg, #FF6B6B 0%, #E74C3C 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(0,0,0,0.2);
+      padding: 60px 40px;
+      border-radius: 15px;
+      max-width: 600px;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    p {
+      font-size: 1.3em;
+      margin-bottom: 40px;
+      opacity: 0.95;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    .btn-novo {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .btn-novo:hover {
+      background: #45a049;
+      transform: scale(1.05);
+    }
+
+    .btn-projetos {
+      background: #2196F3;
+      color: white;
+    }
+
+    .btn-projetos:hover {
+      background: #0b7dda;
+      transform: scale(1.05);
+    }
+
+    .btn-tutorial {
+      background: #FF9800;
+      color: white;
+    }
+
+    .btn-tutorial:hover {
+      background: #e68900;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 CAPTA CULTURA</h1>
+    <p>Bem-vindo! Escolha o que você quer fazer:</p>
+
+    <div class="buttons">
+      <button class="btn-novo" onclick="criarProjeto()">➕ Novo Projeto</button>
+      <button class="btn-projetos" onclick="acessarProjetos()">📁 Acessar Projetos</button>
+      <button class="btn-tutorial" onclick="abrirTutorial()">📚 Tutorial</button>
+    </div>
+  </div>
+
+  <script>
+    function criarProjeto() {
+      // Abre o dashboard com modal de novo projeto
+      window.location.href = '/?novo=true';
+    }
+
+    function acessarProjetos() {
+      // Abre o dashboard
+      window.location.href = '/';
+    }
+
+    function abrirTutorial() {
+      window.open('/tutorial.html', '_blank');
+    }
+  </script>
+</body>
+</html>
