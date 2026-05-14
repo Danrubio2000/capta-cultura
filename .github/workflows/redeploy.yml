@@ -1,0 +1,16 @@
+name: Force Vercel Redeploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Redeploy on Vercel
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+            https://api.vercel.com/v13/deployments \
+            -d '{"action":"redeploy"}'
