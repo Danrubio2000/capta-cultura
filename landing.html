@@ -1,22 +1,48 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAPTA - CULTURA - Financiamento para Documentários, Filmes e Projetos de Arte</title>
+  <title>CAPTA - CULTURA - Financiamento de Projetos Artísticos</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Times New Roman', Times, serif; color: #333; background: white; }
 
     header {
-      background: #FF6B6B;
+      background: linear-gradient(135deg, #FF6B6B 0%, #E74C3C 100%);
       color: white;
       padding: 20px;
-      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
-    header h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: bold; }
+    header h1 { font-size: 2.5em; margin-bottom: 10px; }
     header p { font-size: 1.2em; opacity: 0.9; }
+
+    .header-left { flex: 1; }
+    .header-right { display: flex; align-items: center; gap: 15px; }
+
+    .language-selector {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid white;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1em;
+    }
+
+    .language-selector:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .language-selector option {
+      background: #333;
+      color: white;
+    }
 
     .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
 
@@ -50,6 +76,23 @@
     .feature h3 { margin-bottom: 15px; color: #FF6B6B; font-weight: bold; }
     .feature p { color: #666; line-height: 1.6; }
 
+    .use-cases {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin: 40px 0;
+    }
+
+    .use-case {
+      background: #fff9f7;
+      padding: 25px;
+      border-radius: 8px;
+      border: 1px solid #FF6B6B;
+    }
+
+    .use-case h4 { color: #FF6B6B; margin-bottom: 10px; font-weight: bold; }
+    .use-case p { color: #666; line-height: 1.6; }
+
     .video-section {
       text-align: center;
       padding: 60px 20px;
@@ -63,7 +106,7 @@
     .video-section p { font-size: 1.1em; color: #666; margin-bottom: 25px; line-height: 1.6; }
 
     .video-button {
-      background: #FF6B6B;
+      background: linear-gradient(135deg, #FF6B6B 0%, #E74C3C 100%);
       color: white;
       padding: 15px 50px;
       font-size: 1.1em;
@@ -81,7 +124,7 @@
     }
 
     .pricing {
-      background: #FF6B6B;
+      background: linear-gradient(135deg, #FF6B6B 0%, #E74C3C 100%);
       color: white;
       padding: 50px;
       border-radius: 10px;
@@ -112,26 +155,28 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
-    .use-cases {
-      margin: 40px 0;
+    .success-stories {
+      background: white;
       padding: 30px;
-      background: white;
       border-radius: 8px;
-      border: 1px solid #eee;
+      margin: 40px 0;
+      border: 1px solid #FF6B6B;
     }
 
-    .use-cases h3 { margin-bottom: 20px; color: #FF6B6B; font-weight: bold; font-size: 1.5em; }
+    .success-stories h3 { color: #FF6B6B; margin-bottom: 20px; font-weight: bold; }
 
-    .use-case {
+    .story {
       margin-bottom: 20px;
-      padding: 15px;
-      background: white;
-      border-left: 4px solid #FF6B6B;
-      border-radius: 4px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
     }
 
-    .use-case h4 { color: #FF6B6B; margin-bottom: 5px; font-weight: bold; }
-    .use-case p { color: #666; line-height: 1.6; }
+    .story:last-child {
+      border-bottom: none;
+    }
+
+    .story strong { color: #333; }
+    .story p { color: #666; font-size: 0.95em; }
 
     footer {
       background: #333;
@@ -144,127 +189,367 @@
 </head>
 <body>
   <header>
-    <h1>🎬 CAPTA - CULTURA</h1>
-    <p>Encontre Financiadores para Seus Documentários, Filmes e Projetos de Arte</p>
+    <div class="header-left">
+      <h1>🎬 CAPTA - CULTURA</h1>
+      <p data-i18n="header-subtitle">Encontre Financiamento para Seus Projetos Artísticos</p>
+    </div>
+    <div class="header-right">
+      <select class="language-selector" id="language-selector" onchange="changeLanguage()">
+        <option value="pt">🇧🇷 Português</option>
+        <option value="en">🇺🇸 English</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="fr">🇫🇷 Français</option>
+      </select>
+    </div>
   </header>
 
   <div class="container">
     <div class="hero">
-      <h2>Sua Arte Merece Financiamento</h2>
-      <p>CAPTA - CULTURA ajuda artistas, documentaristas e criadores a encontrar fundações, patrocinadores e financiadores para seus projetos culturais.</p>
+      <h2 data-i18n="hero-title">Sua Arte Merece Financiamento</h2>
+      <p data-i18n="hero-subtitle">CAPTA - CULTURA ajuda artistas, documentaristas e criadores a encontrar fundações, patrocinadores e financiadores para seus projetos culturais.</p>
     </div>
 
     <div class="features">
       <div class="feature">
-        <h3>🎬 Busca de Fundações</h3>
-        <p>50+ fundações verificadas que financiam documentários, filmes e projetos culturais. Filtro por país, tipo e valor.</p>
+        <h3>🎬 <span data-i18n="feature1-title">Busca de Fundações</span></h3>
+        <p data-i18n="feature1-desc">50+ fundações verificadas que financiam documentários, filmes e projetos culturais. Filtro por país, tipo e valor.</p>
       </div>
       <div class="feature">
-        <h3>📧 Campanhas Personalizadas</h3>
-        <p>Templates especializados para cinema e arte. Automatize o envio para múltiplos financiadores. Rastreie respostas.</p>
+        <h3>📧 <span data-i18n="feature2-title">Campanhas Personalizadas</span></h3>
+        <p data-i18n="feature2-desc">Templates especializados para cinema e arte. Automatize o envio para múltiplos financiadores. Rastreie respostas.</p>
       </div>
       <div class="feature">
-        <h3>🎨 Landing Pages Artísticas</h3>
-        <p>Apresente seu projeto com elegância. Templates para documentários, filmes, exposições e performances.</p>
+        <h3>🎨 <span data-i18n="feature3-title">Landing Pages Artísticas</span></h3>
+        <p data-i18n="feature3-desc">Apresente seu projeto com elegância. Templates para documentários, filmes, exposições e performances.</p>
       </div>
       <div class="feature">
-        <h3>🤖 Assistente IA</h3>
-        <p>Sugestões inteligentes com Claude IA para melhorar suas propostas e aumentar chances de aprovação.</p>
+        <h3>🤖 <span data-i18n="feature4-title">Assistente IA</span></h3>
+        <p data-i18n="feature4-desc">Sugestões inteligentes com Claude IA para melhorar suas propostas e aumentar chances de aprovação.</p>
       </div>
       <div class="feature">
-        <h3>🎯 Inteligência de Mercado</h3>
-        <p>Descubra quem financia projetos como o seu. Estatísticas sobre aprovação e valores médios.</p>
+        <h3>🎯 <span data-i18n="feature5-title">Inteligência de Mercado</span></h3>
+        <p data-i18n="feature5-desc">Descubra quem financia projetos como o seu. Estatísticas sobre aprovação e valores médios.</p>
       </div>
       <div class="feature">
-        <h3>📋 Gerenciamento</h3>
-        <p>Organize contatos, acompanhe propostas, histórico de comunicações tudo em um só lugar.</p>
+        <h3>📋 <span data-i18n="feature6-title">Gerenciamento</span></h3>
+        <p data-i18n="feature6-desc">Organize contatos, acompanhe propostas, histórico de comunicações tudo em um só lugar.</p>
       </div>
     </div>
 
     <div class="video-section">
-      <h3>🎥 Veja Como Funciona</h3>
-      <p>Assista a demonstração completa de como CAPTA - CULTURA ajuda você a encontrar financiadores para seus projetos artísticos.</p>
-      <button class="video-button" onclick="window.open('video.html', '_blank')">▶️ Assistir Demonstração</button>
+      <h3>🎥 <span data-i18n="video-title">Veja Como Funciona</span></h3>
+      <p data-i18n="video-desc">Assista a demonstração completa de como CAPTA - CULTURA ajuda você a encontrar financiadores para seus projetos artísticos.</p>
+      <button class="video-button" onclick="window.open('video.html', '_blank')" data-i18n="video-button">▶️ Assistir Demonstração</button>
     </div>
 
     <div class="use-cases">
-      <h3>Para Quem é CAPTA - CULTURA?</h3>
+      <h3 style="grid-column: 1/-1; text-align: center; margin-bottom: 10px; font-weight: bold; color: #FF6B6B;" data-i18n="use-cases-title">Para Quem é CAPTA - CULTURA?</h3>
 
       <div class="use-case">
-        <h4>📽️ Documentaristas</h4>
-        <p>Encontre fundações para documentários sociais, ambientais, históricos. Acesse editais internacionais.</p>
+        <h4>📽️ <span data-i18n="usecase1-title">Documentaristas</span></h4>
+        <p data-i18n="usecase1-desc">Encontre fundações para documentários sociais, ambientais, históricos. Acesse editais internacionais.</p>
       </div>
 
       <div class="use-case">
-        <h4>🎭 Artistas Visuais</h4>
-        <p>Bolsas de residência, prêmios para artes plásticas, fotografia, vídeo arte e instalações.</p>
+        <h4>🎭 <span data-i18n="usecase2-title">Artistas Visuais</span></h4>
+        <p data-i18n="usecase2-desc">Bolsas de residência, prêmios para artes plásticas, fotografia, vídeo arte e instalações.</p>
       </div>
 
       <div class="use-case">
-        <h4>🎵 Produtores Musicais</h4>
-        <p>Financiadores para álbuns, turnês, festivais, música experimental, clássica e contemporânea.</p>
+        <h4>🎵 <span data-i18n="usecase3-title">Produtores Musicais</span></h4>
+        <p data-i18n="usecase3-desc">Financiadores para álbuns, turnês, festivais, música experimental, clássica e contemporânea.</p>
       </div>
 
       <div class="use-case">
-        <h4>🎬 Cineastas Independentes</h4>
-        <p>Apoio para cinema independente, festivais, coprodução internacional e desenvolvimento de roteiros.</p>
+        <h4>🎬 <span data-i18n="usecase4-title">Cineastas Independentes</span></h4>
+        <p data-i18n="usecase4-desc">Apoio para cinema independente, festivais, coprodução internacional e desenvolvimento de roteiros.</p>
       </div>
 
       <div class="use-case">
-        <h4>🎨 Produtores de Teatro</h4>
-        <p>Patrocínio para peças teatrais, performances, dança contemporânea e artes cênicas.</p>
+        <h4>🎨 <span data-i18n="usecase5-title">Produtores de Teatro</span></h4>
+        <p data-i18n="usecase5-desc">Patrocínio para peças teatrais, performances, dança contemporânea e artes cênicas.</p>
       </div>
 
       <div class="use-case">
-        <h4>📚 Escritores & Autores</h4>
-        <p>Editoras, bolsas de escrita, prêmios literários e programas de residência para autores.</p>
+        <h4>📚 <span data-i18n="usecase6-title">Escritores & Autores</span></h4>
+        <p data-i18n="usecase6-desc">Editoras, bolsas de escrita, prêmios literários e programas de residência para autores.</p>
       </div>
     </div>
 
     <div class="pricing">
       <div id="test-badge" style="display:none; background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; color: #856404;">
-        ⚠️ MODO TESTE - ACESSO GRÁTIS ILIMITADO
+        ⚠️ <span data-i18n="test-badge">MODO TESTE - ACESSO GRÁTIS ILIMITADO</span>
       </div>
-      <h2>Mesmo Preço. Especializado para Arte.</h2>
-      <div class="price-label">Plano Único</div>
+      <h2 data-i18n="pricing-title">Mesmo Preço. Especializado para Arte.</h2>
+      <div class="price-label" data-i18n="pricing-label">Plano Único</div>
       <div id="price-display" class="price">R$80</div>
-      <p id="price-period" style="font-size: 1.2em; margin-bottom: 20px;">por mês</p>
-      <p>✓ 50+ fundações de cinema/arte verificadas</p>
-      <p>✓ Busca ilimitada de novos financiadores</p>
-      <p>✓ Templates especializados para sua área</p>
-      <p>✓ Campanhas de propostas em massa</p>
-      <p>✓ Landing pages artísticas profissionais</p>
-      <p>✓ Assistente IA para otimizar propostas</p>
-      <button id="cta-btn" class="cta-button" onclick="handleCTA()">
-        🎬 Comece Sua Busca Agora
-      </button>
+      <p id="price-period" style="font-size: 1.2em; margin-bottom: 20px;" data-i18n="pricing-period">por mês</p>
+      <p data-i18n="pricing-feature1">✓ 50+ fundações de cinema/arte verificadas</p>
+      <p data-i18n="pricing-feature2">✓ Busca ilimitada de novos financiadores</p>
+      <p data-i18n="pricing-feature3">✓ Templates especializados para sua área</p>
+      <p data-i18n="pricing-feature4">✓ Campanhas de propostas em massa</p>
+      <p data-i18n="pricing-feature5">✓ Landing pages artísticas profissionais</p>
+      <p data-i18n="pricing-feature6">✓ Assistente IA para otimizar propostas</p>
+      <button id="cta-btn" class="cta-button" onclick="handleCTA()" data-i18n="cta-button">🎬 Comece Sua Busca Agora</button>
     </div>
 
-    <div style="background: white; padding: 30px; border-radius: 8px; margin: 40px 0; border: 1px solid #FF6B6B;">
-      <h3 style="margin-bottom: 15px; color: #FF6B6B; font-weight: bold;">✨ Histórias de Sucesso</h3>
-      <div style="margin-bottom: 15px;">
-        <strong>"Com CAPTA encontrei 3 fundações que financiaram meu documentário!"</strong>
-        <p style="color: #666; margin-top: 5px;">- Maria, Documentarista</p>
+    <div class="success-stories">
+      <h3 data-i18n="stories-title">✨ Histórias de Sucesso</h3>
+      <div class="story">
+        <strong data-i18n="story1-quote">"Com CAPTA encontrei 3 fundações que financiaram meu documentário!"</strong>
+        <p data-i18n="story1-author">- Maria, Documentarista</p>
       </div>
-      <div>
-        <strong>"Economizei meses de pesquisa. Os contatos verificados foram essenciais."</strong>
-        <p style="color: #666; margin-top: 5px;">- João, Diretor de Cinema</p>
+      <div class="story">
+        <strong data-i18n="story2-quote">"Economizei meses de pesquisa. Os contatos verificados foram essenciais."</strong>
+        <p data-i18n="story2-author">- João, Diretor de Cinema</p>
       </div>
     </div>
   </div>
 
   <footer>
-    <p><strong>CAPTA - CULTURA v2.0</strong> | Especializado em Financiamento de Projetos Artísticos</p>
-    <p>Email: danrubio_2000@yahoo.com | Site: https://artver.com.br</p>
+    <p><strong>CAPTA - CULTURA v2.0</strong> | <span data-i18n="footer-desc">Especializado em Financiamento de Projetos Artísticos</span></p>
+    <p data-i18n="footer-contact">Email: danrubio_2000@yahoo.com | Site: https://artver.com.br</p>
   </footer>
 
   <script>
-    // Detect test mode
+    const translations = {
+      pt: {
+        "header-subtitle": "Encontre Financiamento para Seus Projetos Artísticos",
+        "hero-title": "Sua Arte Merece Financiamento",
+        "hero-subtitle": "CAPTA - CULTURA ajuda artistas, documentaristas e criadores a encontrar fundações, patrocinadores e financiadores para seus projetos culturais.",
+        "feature1-title": "Busca de Fundações",
+        "feature1-desc": "50+ fundações verificadas que financiam documentários, filmes e projetos culturais. Filtro por país, tipo e valor.",
+        "feature2-title": "Campanhas Personalizadas",
+        "feature2-desc": "Templates especializados para cinema e arte. Automatize o envio para múltiplos financiadores. Rastreie respostas.",
+        "feature3-title": "Landing Pages Artísticas",
+        "feature3-desc": "Apresente seu projeto com elegância. Templates para documentários, filmes, exposições e performances.",
+        "feature4-title": "Assistente IA",
+        "feature4-desc": "Sugestões inteligentes com Claude IA para melhorar suas propostas e aumentar chances de aprovação.",
+        "feature5-title": "Inteligência de Mercado",
+        "feature5-desc": "Descubra quem financia projetos como o seu. Estatísticas sobre aprovação e valores médios.",
+        "feature6-title": "Gerenciamento",
+        "feature6-desc": "Organize contatos, acompanhe propostas, histórico de comunicações tudo em um só lugar.",
+        "video-title": "Veja Como Funciona",
+        "video-desc": "Assista a demonstração completa de como CAPTA - CULTURA ajuda você a encontrar financiadores para seus projetos artísticos.",
+        "video-button": "▶️ Assistir Demonstração",
+        "use-cases-title": "Para Quem é CAPTA - CULTURA?",
+        "usecase1-title": "Documentaristas",
+        "usecase1-desc": "Encontre fundações para documentários sociais, ambientais, históricos. Acesse editais internacionais.",
+        "usecase2-title": "Artistas Visuais",
+        "usecase2-desc": "Bolsas de residência, prêmios para artes plásticas, fotografia, vídeo arte e instalações.",
+        "usecase3-title": "Produtores Musicais",
+        "usecase3-desc": "Financiadores para álbuns, turnês, festivais, música experimental, clássica e contemporânea.",
+        "usecase4-title": "Cineastas Independentes",
+        "usecase4-desc": "Apoio para cinema independente, festivais, coprodução internacional e desenvolvimento de roteiros.",
+        "usecase5-title": "Produtores de Teatro",
+        "usecase5-desc": "Patrocínio para peças teatrais, performances, dança contemporânea e artes cênicas.",
+        "usecase6-title": "Escritores & Autores",
+        "usecase6-desc": "Editoras, bolsas de escrita, prêmios literários e programas de residência para autores.",
+        "test-badge": "MODO TESTE - ACESSO GRÁTIS ILIMITADO",
+        "pricing-title": "Mesmo Preço. Especializado para Arte.",
+        "pricing-label": "Plano Único",
+        "pricing-period": "por mês",
+        "pricing-feature1": "✓ 50+ fundações de cinema/arte verificadas",
+        "pricing-feature2": "✓ Busca ilimitada de novos financiadores",
+        "pricing-feature3": "✓ Templates especializados para sua área",
+        "pricing-feature4": "✓ Campanhas de propostas em massa",
+        "pricing-feature5": "✓ Landing pages artísticas profissionais",
+        "pricing-feature6": "✓ Assistente IA para otimizar propostas",
+        "cta-button": "🎬 Comece Sua Busca Agora",
+        "stories-title": "✨ Histórias de Sucesso",
+        "story1-quote": "Com CAPTA encontrei 3 fundações que financiaram meu documentário!",
+        "story1-author": "- Maria, Documentarista",
+        "story2-quote": "Economizei meses de pesquisa. Os contatos verificados foram essenciais.",
+        "story2-author": "- João, Diretor de Cinema",
+        "footer-desc": "Especializado em Financiamento de Projetos Artísticos",
+        "footer-contact": "Email: danrubio_2000@yahoo.com | Site: https://artver.com.br"
+      },
+      en: {
+        "header-subtitle": "Find Funding for Your Artistic Projects",
+        "hero-title": "Your Art Deserves Funding",
+        "hero-subtitle": "CAPTA - CULTURA helps artists, documentarians and creators find foundations, sponsors and funders for their cultural projects.",
+        "feature1-title": "Foundation Search",
+        "feature1-desc": "50+ verified foundations that fund documentaries, films and cultural projects. Filter by country, type and value.",
+        "feature2-title": "Personalized Campaigns",
+        "feature2-desc": "Specialized templates for cinema and art. Automate sending to multiple funders. Track responses.",
+        "feature3-title": "Artistic Landing Pages",
+        "feature3-desc": "Present your project with elegance. Templates for documentaries, films, exhibitions and performances.",
+        "feature4-title": "AI Assistant",
+        "feature4-desc": "Smart suggestions with Claude AI to improve your proposals and increase approval chances.",
+        "feature5-title": "Market Intelligence",
+        "feature5-desc": "Discover who funds projects like yours. Statistics on approval and average values.",
+        "feature6-title": "Management",
+        "feature6-desc": "Organize contacts, track proposals, communication history all in one place.",
+        "video-title": "See How It Works",
+        "video-desc": "Watch a complete demonstration of how CAPTA - CULTURA helps you find funders for your artistic projects.",
+        "video-button": "▶️ Watch Demo",
+        "use-cases-title": "Who is CAPTA - CULTURA For?",
+        "usecase1-title": "Documentarians",
+        "usecase1-desc": "Find foundations for social, environmental, historical documentaries. Access international calls.",
+        "usecase2-title": "Visual Artists",
+        "usecase2-desc": "Residency scholarships, prizes for visual arts, photography, video art and installations.",
+        "usecase3-title": "Music Producers",
+        "usecase3-desc": "Funders for albums, tours, festivals, experimental, classical and contemporary music.",
+        "usecase4-title": "Independent Filmmakers",
+        "usecase4-desc": "Support for independent cinema, festivals, international co-production and script development.",
+        "usecase5-title": "Theater Producers",
+        "usecase5-desc": "Sponsorship for plays, performances, contemporary dance and performing arts.",
+        "usecase6-title": "Writers & Authors",
+        "usecase6-desc": "Publishers, writing scholarships, literary awards and residency programs for authors.",
+        "test-badge": "TEST MODE - UNLIMITED FREE ACCESS",
+        "pricing-title": "Same Price. Specialized for Art.",
+        "pricing-label": "Single Plan",
+        "pricing-period": "per month",
+        "pricing-feature1": "✓ 50+ verified cinema/art foundations",
+        "pricing-feature2": "✓ Unlimited search for new funders",
+        "pricing-feature3": "✓ Specialized templates for your area",
+        "pricing-feature4": "✓ Mass proposal campaigns",
+        "pricing-feature5": "✓ Professional artistic landing pages",
+        "pricing-feature6": "✓ AI assistant to optimize proposals",
+        "cta-button": "🎬 Start Your Search Now",
+        "stories-title": "✨ Success Stories",
+        "story1-quote": "With CAPTA I found 3 foundations that funded my documentary!",
+        "story1-author": "- Maria, Documentary Filmmaker",
+        "story2-quote": "I saved months of research. The verified contacts were essential.",
+        "story2-author": "- João, Film Director",
+        "footer-desc": "Specialized in Artistic Project Funding",
+        "footer-contact": "Email: danrubio_2000@yahoo.com | Website: https://artver.com.br"
+      },
+      es: {
+        "header-subtitle": "Encuentra Financiamiento para tus Proyectos Artísticos",
+        "hero-title": "Tu Arte Merece Financiamiento",
+        "hero-subtitle": "CAPTA - CULTURA ayuda a artistas, documentalistas y creadores a encontrar fundaciones, patrocinadores y financiadores para sus proyectos culturales.",
+        "feature1-title": "Búsqueda de Fundaciones",
+        "feature1-desc": "50+ fundaciones verificadas que financian documentales, películas y proyectos culturales. Filtra por país, tipo y valor.",
+        "feature2-title": "Campañas Personalizadas",
+        "feature2-desc": "Plantillas especializadas para cine y arte. Automatiza el envío a múltiples financiadores. Rastrea respuestas.",
+        "feature3-title": "Landing Pages Artísticas",
+        "feature3-desc": "Presenta tu proyecto con elegancia. Plantillas para documentales, películas, exposiciones y performances.",
+        "feature4-title": "Asistente de IA",
+        "feature4-desc": "Sugerencias inteligentes con IA Claude para mejorar tus propuestas y aumentar posibilidades de aprobación.",
+        "feature5-title": "Inteligencia de Mercado",
+        "feature5-desc": "Descubre quién financia proyectos como el tuyo. Estadísticas de aprobación y valores promedio.",
+        "feature6-title": "Gestión",
+        "feature6-desc": "Organiza contactos, rastrea propuestas, historial de comunicaciones todo en un solo lugar.",
+        "video-title": "Ve Cómo Funciona",
+        "video-desc": "Ve una demostración completa de cómo CAPTA - CULTURA te ayuda a encontrar financiadores para tus proyectos artísticos.",
+        "video-button": "▶️ Ver Demostración",
+        "use-cases-title": "¿Para Quién es CAPTA - CULTURA?",
+        "usecase1-title": "Documentalistas",
+        "usecase1-desc": "Encuentra fundaciones para documentales sociales, ambientales, históricos. Accede a convocatorias internacionales.",
+        "usecase2-title": "Artistas Visuales",
+        "usecase2-desc": "Becas de residencia, premios para artes plásticas, fotografía, video arte e instalaciones.",
+        "usecase3-title": "Productores Musicales",
+        "usecase3-desc": "Financiadores para álbumes, giras, festivales, música experimental, clásica y contemporánea.",
+        "usecase4-title": "Cineastas Independientes",
+        "usecase4-desc": "Apoyo para cine independiente, festivales, coproducción internacional y desarrollo de guiones.",
+        "usecase5-title": "Productores de Teatro",
+        "usecase5-desc": "Patrocinio para obras de teatro, performances, danza contemporánea y artes escénicas.",
+        "usecase6-title": "Escritores y Autores",
+        "usecase6-desc": "Editoriales, becas de escritura, premios literarios y programas de residencia para autores.",
+        "test-badge": "MODO PRUEBA - ACCESO GRATIS ILIMITADO",
+        "pricing-title": "Mismo Precio. Especializado para Arte.",
+        "pricing-label": "Plan Único",
+        "pricing-period": "por mes",
+        "pricing-feature1": "✓ 50+ fundaciones de cine/arte verificadas",
+        "pricing-feature2": "✓ Búsqueda ilimitada de nuevos financiadores",
+        "pricing-feature3": "✓ Plantillas especializadas para tu área",
+        "pricing-feature4": "✓ Campañas de propuestas en masa",
+        "pricing-feature5": "✓ Landing pages artísticas profesionales",
+        "pricing-feature6": "✓ Asistente de IA para optimizar propuestas",
+        "cta-button": "🎬 Comienza tu Búsqueda Ahora",
+        "stories-title": "✨ Historias de Éxito",
+        "story1-quote": "¡Con CAPTA encontré 3 fundaciones que financiaron mi documental!",
+        "story1-author": "- María, Documentalista",
+        "story2-quote": "Ahorré meses de investigación. Los contactos verificados fueron esenciales.",
+        "story2-author": "- João, Director de Cine",
+        "footer-desc": "Especializado en Financiamiento de Proyectos Artísticos",
+        "footer-contact": "Email: danrubio_2000@yahoo.com | Sitio: https://artver.com.br"
+      },
+      fr: {
+        "header-subtitle": "Trouvez le Financement pour vos Projets Artistiques",
+        "hero-title": "Votre Art Mérite du Financement",
+        "hero-subtitle": "CAPTA - CULTURA aide les artistes, documentaristes et créateurs à trouver des fondations, parrains et financeurs pour leurs projets culturels.",
+        "feature1-title": "Recherche de Fondations",
+        "feature1-desc": "50+ fondations vérifiées qui financent les documentaires, films et projets culturels. Filtrez par pays, type et valeur.",
+        "feature2-title": "Campagnes Personnalisées",
+        "feature2-desc": "Modèles spécialisés pour le cinéma et l'art. Automatisez l'envoi à plusieurs financeurs. Suivez les réponses.",
+        "feature3-title": "Landing Pages Artistiques",
+        "feature3-desc": "Présentez votre projet avec élégance. Modèles pour documentaires, films, expositions et performances.",
+        "feature4-title": "Assistant IA",
+        "feature4-desc": "Suggestions intelligentes avec Claude IA pour améliorer vos propositions et augmenter les chances d'approbation.",
+        "feature5-title": "Intelligence du Marché",
+        "feature5-desc": "Découvrez qui finance des projets comme le vôtre. Statistiques d'approbation et valeurs moyennes.",
+        "feature6-title": "Gestion",
+        "feature6-desc": "Organisez les contacts, suivez les propositions, l'historique des communications tout en un seul endroit.",
+        "video-title": "Voyez Comment Cela Fonctionne",
+        "video-desc": "Regardez une démonstration complète de la façon dont CAPTA - CULTURA vous aide à trouver des financeurs pour vos projets artistiques.",
+        "video-button": "▶️ Regarder la Démo",
+        "use-cases-title": "Pour Qui est CAPTA - CULTURA?",
+        "usecase1-title": "Documentalistes",
+        "usecase1-desc": "Trouvez des fondations pour des documentaires sociaux, environnementaux, historiques. Accédez à des appels internationaux.",
+        "usecase2-title": "Artistes Visuels",
+        "usecase2-desc": "Bourses de résidence, prix pour les arts plastiques, photographie, art vidéo et installations.",
+        "usecase3-title": "Producteurs Musicaux",
+        "usecase3-desc": "Financeurs pour albums, tournées, festivals, musique expérimentale, classique et contemporaine.",
+        "usecase4-title": "Cinéastes Indépendants",
+        "usecase4-desc": "Soutien pour le cinéma indépendant, festivals, coproduction internationale et développement de scénarios.",
+        "usecase5-title": "Producteurs de Théâtre",
+        "usecase5-desc": "Parrainage pour les pièces de théâtre, performances, danse contemporaine et arts de la scène.",
+        "usecase6-title": "Écrivains et Auteurs",
+        "usecase6-desc": "Éditeurs, bourses d'écriture, prix littéraires et programmes de résidence pour auteurs.",
+        "test-badge": "MODE TEST - ACCÈS GRATUIT ILLIMITÉ",
+        "pricing-title": "Même Prix. Spécialisé pour l'Art.",
+        "pricing-label": "Plan Unique",
+        "pricing-period": "par mois",
+        "pricing-feature1": "✓ 50+ fondations de cinéma/art vérifiées",
+        "pricing-feature2": "✓ Recherche illimitée de nouveaux financeurs",
+        "pricing-feature3": "✓ Modèles spécialisés pour votre domaine",
+        "pricing-feature4": "✓ Campagnes de propositions en masse",
+        "pricing-feature5": "✓ Landing pages artistiques professionnelles",
+        "pricing-feature6": "✓ Assistant IA pour optimiser les propositions",
+        "cta-button": "🎬 Commencez Votre Recherche Maintenant",
+        "stories-title": "✨ Histoires de Succès",
+        "story1-quote": "Avec CAPTA j'ai trouvé 3 fondations qui ont financé mon documentaire!",
+        "story1-author": "- Maria, Documentaliste",
+        "story2-quote": "J'ai économisé des mois de recherche. Les contacts vérifiés étaient essentiels.",
+        "story2-author": "- João, Réalisateur",
+        "footer-desc": "Spécialisé dans le Financement de Projets Artistiques",
+        "footer-contact": "Email: danrubio_2000@yahoo.com | Site: https://artver.com.br"
+      }
+    };
+
+    function initLanguage() {
+      let lang = localStorage.getItem('preferredLanguage');
+      if (!lang) {
+        const browserLang = navigator.language.split('-')[0];
+        lang = ['pt', 'en', 'es', 'fr'].includes(browserLang) ? browserLang : 'pt';
+      }
+      document.getElementById('language-selector').value = lang;
+      setLanguage(lang);
+    }
+
+    function changeLanguage() {
+      const lang = document.getElementById('language-selector').value;
+      localStorage.setItem('preferredLanguage', lang);
+      setLanguage(lang);
+    }
+
+    function setLanguage(lang) {
+      const translation = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translation[key]) {
+          el.textContent = translation[key];
+        }
+      });
+      document.documentElement.lang = lang;
+    }
+
     const params = new URLSearchParams(window.location.search);
     const isTestMode = params.has('test') && params.get('test') === 'true';
 
     if (isTestMode) {
-      // Show test badge
       document.getElementById('test-badge').style.display = 'block';
       document.getElementById('price-display').textContent = 'GRÁTIS';
       document.getElementById('price-period').textContent = 'Acesso ilimitado';
@@ -276,6 +561,8 @@
       const consoleUrl = window.location.origin + '/?test=' + (isTestMode ? 'true' : 'false');
       window.location.href = consoleUrl;
     }
+
+    window.addEventListener('load', initLanguage);
   </script>
 </body>
 </html>
