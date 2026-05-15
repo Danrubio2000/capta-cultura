@@ -1386,6 +1386,13 @@
 
     let searchResults = [];
 
+    // Initialize: Keep search results EMPTY - no pre-loaded data
+    function initializeSearchResults() {
+      const container = document.getElementById("search-results");
+      container.innerHTML = ""; // Always starts clean
+    }
+    initializeSearchResults();
+
     document.getElementById("search-leads-form")?.addEventListener("submit", async (e) => {
       e.preventDefault();
 

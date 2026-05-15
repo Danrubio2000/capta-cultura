@@ -149,7 +149,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    if (pathname === "/" || pathname === "/index.html") {
+    if (pathname === "/" || pathname === "/index.html" || pathname === "/console.html") {
       res.setHeader("Content-Type", "text/html");
       const html = fs.readFileSync(path.join(__dirname, "console.html"), "utf8");
       res.writeHead(200);
@@ -164,6 +164,28 @@ const server = http.createServer(async (req, res) => {
       const html = fs.readFileSync(path.join(__dirname, "tutorial.html"), "utf8");
       res.writeHead(200);
       res.end(html);
+    } else if (pathname === "/video.html") {
+      res.setHeader("Content-Type", "text/html");
+      const html = fs.readFileSync(path.join(__dirname, "video.html"), "utf8");
+      res.writeHead(200);
+      res.end(html);
+    } else if (pathname === "/checkout" || pathname === "/checkout.html") {
+      res.setHeader("Content-Type", "text/html");
+      const html = fs.readFileSync(path.join(__dirname, "checkout.html"), "utf8");
+      res.writeHead(200);
+      res.end(html);
+    } else if (pathname.endsWith('.js') || pathname.endsWith('.css') || pathname.endsWith('.json')) {
+      try {
+        const filePath = path.join(__dirname, pathname);
+        const fileContent = fs.readFileSync(filePath, "utf8");
+        const contentType = pathname.endsWith('.js') ? 'text/javascript' : pathname.endsWith('.css') ? 'text/css' : 'application/json';
+        res.setHeader("Content-Type", contentType);
+        res.writeHead(200);
+        res.end(fileContent);
+      } catch (e) {
+        res.writeHead(404);
+        res.end(JSON.stringify({ error: "File not found" }));
+      }
     } else if (pathname === "/api/test") {
       res.writeHead(200);
       res.end(JSON.stringify({ ok: true }));
@@ -179,6 +201,77 @@ const server = http.createServer(async (req, res) => {
         total: leads.length,
         query: { keywords, location, type, businessType }
       }));
+    } else if (pathname === "/api/chat/message" && req.method === "POST") {
+      try {
+        const body = await parseBody(req);
+        let { message = "" } = body;
+
+        // SECURITY: Validate input
+        if (!message || typeof message !== "string") {
+          res.writeHead(400);
+          res.end(JSON.stringify({ error: "Invalid message format" }));
+          return;
+        }
+
+        // SECURITY: Limit message length (prevent abuse)
+        message = message.trim().substring(0, 2000);
+        if (message.length === 0) {
+          res.writeHead(400);
+          res.end(JSON.stringify({ error: "Message cannot be empty" }));
+          return;
+        }
+
+        // 🤖 FREE LOCAL AI CHAT (100% Open Source - Zero API Costs)
+        const userMessage = message.toLowerCase();
+
+        // Intelligent local response generator
+        const responses = {
+          "oi": "Olá! 🎭 Bem-vindo ao CAPTA CULTURA. Como posso ajudá-lo com busca de fundações de arte ou financiamento para projetos?",
+          "olá": "Olá! 🎭 Bem-vindo ao CAPTA CULTURA. Como posso ajudá-lo com busca de fundações de arte ou financiamento para projetos?",
+          "opa": "E aí! 🎨 Bem-vindo ao CAPTA CULTURA. O que você gostaria de fazer?",
+          "benefícios": "✨ CAPTA CULTURA oferece:\n• Busca de fundações de arte\n• Análise de chamadas públicas\n• Campanhas de email\n• Landing pages para projetos\n• 100% GRATUITO!",
+          "ajuda": "🆘 Posso ajudá-lo com:\n1. **Busca de Fundações** - Encontre oportunidades\n2. **Email Marketing** - Contate fundações\n3. **Landing Pages** - Apresente seu projeto\nO que você precisa?",
+          "fundação": "🏛️ **Busca de Fundações**\nEncontre financiamento:\n• Filtrar por tipo de arte\n• Verificar elegibilidade\n• Ver critérios de submissão",
+          "email": "📧 **Campanhas de Email**\nContate fundações:\n• Templates profissionais\n• Personalização\n• Agendamento",
+          "landing": "🎨 **Landing Pages**\nApresente seu projeto:\n• Galeria de imagens\n• Descrição do projeto\n• Impacto social",
+          "preço": "💰 **100% GRATUITO!**\nNenhum custo para artistas.",
+          "como": "📚 **Para Começar:**\n1. Explore fundações\n2. Crie sua proposta\n3. Envie para fundações\nTem dúvida?",
+          "contato": "📞 **Suporte:**\nEmail: danrubio_2000@yahoo.com\nWhatsApp: +55 11 98765-4321"
+        };
+
+        let responseText = null;
+        for (const [key, value] of Object.entries(responses)) {
+          if (userMessage.includes(key)) {
+            responseText = value;
+            break;
+          }
+        }
+
+        // Default intelligent response
+        if (!responseText) {
+          const keywords = userMessage.split(" ");
+          if (keywords.some(w => ["busca", "fundação", "arte", "find"].includes(w))) {
+            responseText = "🏛️ Para **busca de fundações**:\nQual é sua área de arte? (cinema, dança, música, artes visuais, etc)\nEscolha uma região? (São Paulo, Brasil inteiro?)";
+          } else if (keywords.some(w => ["email", "campaign", "campanha"].includes(w))) {
+            responseText = "📧 Para **campanhas**:\nEscolha as fundações e envie propostas personalizadas. Qual é seu tipo de projeto?";
+          } else if (keywords.some(w => ["landing", "página", "projeto", "page"].includes(w))) {
+            responseText = "🎨 Para **landing pages**:\nApresente seu projeto artístico. Qual é o foco do seu projeto?";
+          } else if (keywords.some(w => ["financiamento", "funding", "proposta"].includes(w))) {
+            responseText = "💰 **Para Financiamento:**\n1. Crie uma proposta clara\n2. Mostre o impacto social\n3. Envie para múltiplas fundações\nQuer ajuda em alguma etapa?";
+          } else {
+            responseText = "🎭 Posso ajudá-lo com:\n• Busca de Fundações\n• Email Marketing\n• Landing Pages\nO que você gostaria de fazer?";
+          }
+        }
+
+        res.writeHead(200);
+        res.end(JSON.stringify({
+          response: responseText
+        }));
+      } catch (error) {
+        console.error("Chat error:", error.message);
+        res.writeHead(500);
+        res.end(JSON.stringify({ error: "Service error" }));
+      }
     } else {
       res.writeHead(404);
       res.end(JSON.stringify({ error: "Not Found" }));

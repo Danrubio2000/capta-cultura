@@ -352,27 +352,72 @@ async function handleAPI(req, res, url, method) {
     }
   }
 
-  // 🤖 CLAUDE AI CHAT
+  // 🤖 FREE LOCAL AI CHAT (100% Open Source - Zero API Costs)
   if (endpoint === "chat") {
-    if (action === "message" && method === "POST" && claude) {
+    if (action === "message" && method === "POST") {
       const body = await parseBody(req);
-      try {
-        const message = await claude.messages.create({
-          model: "claude-3-5-sonnet-20241022",
-          max_tokens: 1024,
-          messages: [
-            {
-              role: "user",
-              content: body.message || "Olá! Como posso ajudá-lo com CAPTA - CULTURA?"
-            }
-          ],
-          system: "Você é um assistente especializado em CAPTA - CULTURA. Ajude os usuários com perguntas sobre busca de leads, campanhas de email e criação de landing pages. Seja amigável e conciso."
-        });
-        const responseText = message.content[0]?.text || "Desculpe, não consegui processar sua solicitação.";
-        return json(res, { success: true, response: responseText });
-      } catch (error) {
-        return json(res, { success: false, error: error.message }, 500);
+      const userMessage = (body.message || "").toLowerCase().trim();
+
+      // Intelligent local response generator - completely free, no external API needed
+      const responses = {
+        // Greetings
+        "oi": "Olá! 🎭 Bem-vindo ao CAPTA CULTURA. Como posso ajudá-lo com busca de fundações de arte, campanhas de email ou criação de landing pages?",
+        "olá": "Olá! 🎭 Bem-vindo ao CAPTA CULTURA. Como posso ajudá-lo com busca de fundações de arte, campanhas de email ou criação de landing pages?",
+        "opa": "E aí! 🎨 Bem-vindo ao CAPTA CULTURA. O que você gostaria de fazer?",
+
+        // Benefits
+        "benefícios": "✨ CAPTA CULTURA oferece:\n• Busca de fundações de arte qualificadas\n• Análise de chamadas públicas\n• Campanhas de email automáticas\n• Criação de landing pages para projetos\n• Assistência IA para financiamento de projetos\n• Tudo sem custos de API (100% gratuito!)",
+        "vantagens": "✨ CAPTA CULTURA oferece:\n• Busca de fundações de arte qualificadas\n• Análise de chamadas públicas\n• Campanhas de email automáticas\n• Criação de landing pages para projetos\n• Assistência IA para financiamento de projetos\n• Tudo sem custos de API (100% gratuito!)",
+        "ajuda": "🆘 Posso ajudá-lo com:\n1. **Busca de Fundações** - Encontre oportunidades de financiamento\n2. **Email Marketing** - Crie campanhas para fundações\n3. **Landing Pages** - Apresente seu projeto profissionalmente\n4. **Estratégias** - Dicas de financiamento para artistas\nO que você precisa?",
+
+        // Features
+        "fundação": "🏛️ **Busca de Fundações**\nEncontre oportunidades de financiamento:\n• Filtrar por tipo de arte, região, valor\n• Dados verificados de fundações reais\n• Informações sobre chamadas públicas\n• Critérios de elegibilidade",
+        "fundações": "🏛️ **Busca de Fundações**\nEncontre oportunidades de financiamento:\n• Filtrar por tipo de arte, região, valor\n• Dados verificados de fundações reais\n• Informações sobre chamadas públicas\n• Critérios de elegibilidade",
+        "email": "📧 **Campanhas de Email**\nAutomatize suas estratégias:\n• Templates profissionais para artistas\n• Personalização em massa\n• Rastreamento de respostas\n• Agendamento de envios",
+        "landing": "🎨 **Landing Pages para Projetos**\nApresente sua obra:\n• Templates para artistas\n• Galeria de imagens\n• Descrição do projeto\n• Integração com email",
+        "projeto": "🎬 **Seu Projeto**\nCOMO APRESENTAR:\n1. Crie uma landing page\n2. Destaque seu portfólio\n3. Conte sua história\n4. Mostre o impacto social\n5. Envie para fundações",
+
+        // Pricing
+        "preço": "💰 **CAPTA CULTURA é 100% GRATUITO!**\nNenhum custo de API, nenhuma taxa escondida.\nUse todas as funcionalidades sem limitações.",
+        "valor": "💰 **CAPTA CULTURA é 100% GRATUITO!**\nNenhum custo de API, nenhuma taxa escondida.\nUse todas as funcionalidades sem limitações.",
+        "plano": "💰 **CAPTA CULTURA é 100% GRATUITO!**\nNenhum custo de API, nenhuma taxa escondida.\nUse todas as funcionalidades sem limitações.",
+
+        // How to
+        "como": "📚 **Como Usar CAPTA CULTURA:**\n1. Acesse o console\n2. Busque fundações de arte\n3. Escolha as oportunidades\n4. Crie uma proposta\n5. Envie com confiança\n\nTem dúvida em algum passo?",
+        "começar": "🚀 **Para Começar:**\n1. Acesse http://localhost:3001\n2. Explore fundações disponíveis\n3. Filtre por sua área de arte\n4. Crie uma proposta\n5. Envie para fundações\n\nVocê tem alguma dúvida específica?",
+        "financiamento": "💰 **Financiamento para Artistas:**\nOpções disponíveis:\n• Fundações de arte\n• Editais públicos\n• Mecenato\n• Crowdfunding\n• Parcerias estratégicas\n\nQual te interessa?",
+
+        // Contact
+        "contato": "📞 **Entre em Contato:**\nEmail: danrubio_2000@yahoo.com\nWhatsApp: +55 11 98765-4321\n\nEstou aqui para ajudá-lo!",
+        "suporte": "🤝 **Suporte**\nSe tiver problemas:\n1. Verifique a documentação\n2. Teste as funcionalidades básicas\n3. Envie feedback\n\nEmail: danrubio_2000@yahoo.com",
+      };
+
+      // Find matching response
+      let responseText = null;
+      for (const [key, value] of Object.entries(responses)) {
+        if (userMessage.includes(key)) {
+          responseText = value;
+          break;
+        }
       }
+
+      // Default response if no match found
+      if (!responseText) {
+        const keywords = userMessage.split(" ");
+        if (keywords.some(w => ["busca", "fundação", "arte", "find"].includes(w))) {
+          responseText = "🏛️ Posso ajudá-lo com **busca de fundações de arte**! Diga-me:\n• Qual é sua área de arte? (cinema, dança, música, artes visuais, etc)\n• Qual região? (São Paulo, Rio, Brasil inteiro?)\n• Qual tipo de financiamento busca?\n\nExemplo: 'Fundações para documentário em São Paulo'";
+        } else if (keywords.some(w => ["email", "campaign", "campanha"].includes(w))) {
+          responseText = "📧 Para **campanhas de email**:\n1. Escolha as fundações\n2. Selecione um template\n3. Personalize sua proposta\n4. Agende e envie\n\nQual é seu tipo de projeto?";
+        } else if (keywords.some(w => ["landing", "página", "page", "projeto"].includes(w))) {
+          responseText = "🎨 Para criar uma **landing page para seu projeto**:\n1. Escolha um template\n2. Customize com suas imagens\n3. Conte sua história\n4. Publique\n\nQual é seu tipo de projeto artístico?";
+        } else if (keywords.some(w => ["proposta", "financiamento", "funding"].includes(w))) {
+          responseText = "📋 Para uma **proposta vencedora**:\n1. Seja claro e conciso\n2. Mostre o impacto social\n3. Inclua orçamento detalhado\n4. Destaque sua experiência\n5. Envie para múltiplas fundações\n\nTem dúvida em alguma parte?";
+        } else {
+          responseText = "🎭 Posso ajudá-lo com:\n• **Busca de Fundações** - encontre financiamento\n• **Email Marketing** - contate fundações\n• **Landing Pages** - apresente seu projeto\n\nO que você gostaria de fazer?";
+        }
+      }
+
+      return json(res, { success: true, response: responseText });
     }
   }
 

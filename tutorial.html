@@ -124,13 +124,23 @@
 </head>
 <body>
   <header>
-    <h1>🎬 Tutorial Completo - CAPTA CULTURA</h1>
-    <p>Encontre Financiadores para Seus Documentários, Filmes e Projetos de Arte</p>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <div></div>
+      <select id="language-selector" style="padding: 8px 12px; border-radius: 5px; border: 2px solid white; background: transparent; color: white; font-weight: bold; cursor: pointer; font-size: 0.9em;">
+        <option value="pt" style="color: #333;">🇵🇹 Português</option>
+        <option value="en" style="color: #333;">🇬🇧 English</option>
+        <option value="es" style="color: #333;">🇪🇸 Español</option>
+        <option value="fr" style="color: #333;">🇫🇷 Français</option>
+      </select>
+    </div>
+    <h1 data-i18n="tutorial-title">🎬 Tutorial Completo - CAPTA CULTURA</h1>
+    <p data-i18n="tutorial-subtitle">Encontre Financiadores para Seus Documentários, Filmes e Projetos de Arte</p>
   </header>
 
   <div class="container">
     <div class="toc">
-      <h2>📋 Sumário</h2>
+      <h2 data-i18n="toc-heading">📋 Sumário</h2>
+      <p data-i18n="closing-congrats" style="display: none;"></p>
       <ul>
         <li>✓ <a href="#intro">Introdução</a></li>
         <li>✓ <a href="#setup">Setup Inicial</a></li>
@@ -536,10 +546,11 @@
   </div>
 
   <footer>
-    <p><strong>CAPTA CULTURA - Tutorial Completo</strong></p>
-    <p>Desenvolvido com ❤️ para artistas, cineastas e criadores</p>
+    <p data-i18n="footer-title"><strong>CAPTA CULTURA - Tutorial Completo</strong></p>
+    <p data-i18n="footer-text">Desenvolvido com ❤️ para artistas, cineastas e criadores</p>
     <p>Email: danrubio_2000@yahoo.com</p>
   </footer>
   <script src="chat-widget.js"></script>
+  <script src="translations-pages.js"></script>
 </body>
 </html>

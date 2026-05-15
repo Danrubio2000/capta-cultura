@@ -222,8 +222,17 @@
 <body>
   <div class="container">
     <header>
-      <h1>🎬 CAPTA - CULTURA - Demonstração</h1>
-      <p>Veja como encontrar financiadores, enviar propostas e apresentar seus projetos artísticos</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <div></div>
+        <select id="language-selector" style="padding: 8px 12px; border-radius: 5px; border: 2px solid #FF6B6B; background: white; color: #FF6B6B; font-weight: bold; cursor: pointer; font-size: 0.9em;">
+          <option value="pt">🇵🇹 Português</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="fr">🇫🇷 Français</option>
+        </select>
+      </div>
+      <h1 data-i18n="video-title">🎬 CAPTA - CULTURA - Demonstração</h1>
+      <p data-i18n="video-subtitle">Veja como encontrar financiadores, enviar propostas e apresentar seus projetos artísticos</p>
     </header>
 
     <div class="video-section">
@@ -369,5 +378,6 @@
     showSlide(currentSlide);
   </script>
   <script src="chat-widget.js"></script>
+  <script src="translations-pages.js"></script>
 </body>
 </html>
