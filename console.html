@@ -1528,7 +1528,7 @@
     function exportLeads(format) {
       const leads = JSON.parse(localStorage.getItem(getProjectKey("my_leads")) || "[]");
       if (format === "csv") {
-        const csv = ["Nome,Email", ...leads.map((l) => `${l.nome},${l.email}`)].join("\n");
+        const csv = ["Nome,Email", ...leads.map((l) => `${l.name || l.nome || ""},${l.email || ""}`)].join("\n");
         downloadFile(csv, "leads.csv", "text/csv");
       } else {
         downloadFile(JSON.stringify(leads, null, 2), "leads.json", "application/json");
@@ -1633,7 +1633,8 @@
           campaignId,
           leads
         });
-        showAlert(`✅ ${result.result.success} emails enviados!`, "success");
+        const sent = result?.sent ?? result?.result?.success ?? result?.success ?? "N/A";
+        showAlert(`✅ ${sent} emails enviados!`, "success");
         refreshCampaignsList();
       } catch (error) {
         console.error(error); showAlert("❌ Erro na busca.", "error");
@@ -1851,7 +1852,15 @@
         "label-phone": "📱 Telefone",
         "label-social": "📱 Redes Sociais",
         "label-about": "📝 Sobre seu Projeto Artístico",
-        "btn-save-settings": "💾 Salvar Configurações"
+        "btn-save-settings": "💾 Salvar Configurações",
+        "ph-keywords": "Digite palavras-chave (ex: fundação documentário, arte)",
+        "ph-location": "Localização (ex: Internacional, São Paulo, Brasil)",
+        "ph-import": "Cole dados aqui (JSON ou um lead por linha)\nFormato esperado: nome,email,organização",
+        "btn-search-leads": "🔍 Buscar Fundações",
+        "opt-business": "Negócio",
+        "opt-foundation": "Fundação",
+        "opt-ngo": "ONG",
+        "opt-any": "Qualquer"
       },
       en: {
         "dashboard": "Dashboard",
@@ -1888,7 +1897,15 @@
         "label-phone": "📱 Phone",
         "label-social": "📱 Social Media",
         "label-about": "📝 About Your Artistic Project",
-        "btn-save-settings": "💾 Save Settings"
+        "btn-save-settings": "💾 Save Settings",
+        "ph-keywords": "Enter keywords (e.g. documentary foundation, art grants)",
+        "ph-location": "Location (e.g. International, New York, USA)",
+        "ph-import": "Paste data here (JSON or one lead per line)\nExpected format: name,email,organization",
+        "btn-search-leads": "🔍 Search Foundations",
+        "opt-business": "Business",
+        "opt-foundation": "Foundation",
+        "opt-ngo": "NGO",
+        "opt-any": "Any"
       },
       es: {
         "dashboard": "Panel de Control",
@@ -1925,7 +1942,15 @@
         "label-phone": "📱 Teléfono",
         "label-social": "📱 Redes Sociales",
         "label-about": "📝 Acerca de tu Proyecto Artístico",
-        "btn-save-settings": "💾 Guardar Configuración"
+        "btn-save-settings": "💾 Guardar Configuración",
+        "ph-keywords": "Ingrese palabras clave (ej: fundación documental, arte)",
+        "ph-location": "Ubicación (ej: Internacional, Ciudad de México)",
+        "ph-import": "Pegue datos aquí (JSON o un lead por línea)\nFormato esperado: nombre,email,organización",
+        "btn-search-leads": "🔍 Buscar Fundaciones",
+        "opt-business": "Negocio",
+        "opt-foundation": "Fundación",
+        "opt-ngo": "ONG",
+        "opt-any": "Cualquiera"
       },
       fr: {
         "dashboard": "Tableau de Bord",
@@ -1962,7 +1987,15 @@
         "label-phone": "📱 Téléphone",
         "label-social": "📱 Réseaux Sociaux",
         "label-about": "📝 À Propos de Votre Projet Artistique",
-        "btn-save-settings": "💾 Enregistrer les Paramètres"
+        "btn-save-settings": "💾 Enregistrer les Paramètres",
+        "ph-keywords": "Entrez des mots-clés (ex: fondation documentaire, art)",
+        "ph-location": "Localisation (ex: International, Paris, France)",
+        "ph-import": "Collez les données ici (JSON ou un lead par ligne)\nFormat attendu: nom,email,organisation",
+        "btn-search-leads": "🔍 Chercher des Fondations",
+        "opt-business": "Entreprise",
+        "opt-foundation": "Fondation",
+        "opt-ngo": "ONG",
+        "opt-any": "Tout"
       }
     };
 
@@ -2011,6 +2044,22 @@
         const key = el.getAttribute('data-i18n');
         if (translations[lang][key]) el.textContent = translations[lang][key];
       });
+
+      // Update search form placeholders
+      const t = translations[lang];
+      const kwEl = document.getElementById('search-keywords');
+      if (kwEl && t['ph-keywords']) kwEl.placeholder = t['ph-keywords'];
+      const locEl = document.getElementById('search-location');
+      if (locEl && t['ph-location']) locEl.placeholder = t['ph-location'];
+      const importEl = document.getElementById('import-leads-data');
+      if (importEl && t['ph-import']) importEl.placeholder = t['ph-import'];
+
+      // Update search type select options
+      const searchType = document.getElementById('search-type');
+      if (searchType && t['opt-business']) {
+        const vals = { business: t['opt-business'], foundation: t['opt-foundation'], ngo: t['opt-ngo'], any: t['opt-any'] };
+        Array.from(searchType.options).forEach(opt => { if (vals[opt.value]) opt.text = vals[opt.value]; });
+      }
     }
 
     // Initialize language
