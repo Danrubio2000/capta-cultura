@@ -1014,9 +1014,20 @@
 
     function selectProject(projectId) {
       if (!projectId) return;
+
+      // Validate project exists
+      const projects = JSON.parse(localStorage.getItem('capta_projects') || '[]');
+      const projectExists = projects.find(p => p.id === projectId);
+
+      if (!projectExists) {
+        showAlert('❌ Projeto não encontrado!', 'error');
+        return;
+      }
+
       currentProject = projectId;
       localStorage.setItem('capta_active_project', projectId);
       updateProjectSelector();
+      loadProjectSettings();
       refreshLeadsList();
       refreshCampaignsList();
       refreshPagesList();
@@ -1210,14 +1221,21 @@
         renderSearchResults();
         showAlert(`✅ ${result.leads.length} leads encontrados!`, "success");
       } catch (error) {
-        console.error(error);
+        console.error(error); showAlert("❌ Erro na busca.", "error");
       }
     });
 
     function renderSearchResults() {
       const container = document.getElementById("search-results");
       if (searchResults.length === 0) {
-        container.innerHTML = "<p>Nenhum resultado. Faça uma busca primeiro.</p>";
+        const lang = getCurrentLanguage();
+        const messages = {
+          pt: "Nenhum resultado. Faça uma busca primeiro.",
+          en: "No results. Make a search first.",
+          es: "Sin resultados. Realiza una búsqueda primero.",
+          fr: "Aucun résultat. Effectuez une recherche d'abord."
+        };
+        container.innerHTML = `<p>${messages[lang] || messages.pt}</p>`;
         return;
       }
 
@@ -1238,11 +1256,11 @@
               .map(
                 (lead) => `
               <tr>
-                <td>${lead.nome}</td>
+                <td>${lead.name}</td>
                 <td>${lead.email}</td>
                 <td><a href="${lead.website}" target="_blank">Ir</a></td>
                 <td><span class="badge success">${lead.score}</span></td>
-                <td><button onclick="addToLeads('${lead.email}', '${lead.nome}')">➕ Adicionar</button></td>
+                <td><button onclick="addToLeads('${lead.email}', '${lead.name}')">➕ Adicionar</button></td>
               </tr>`
               )
               .join("")}
@@ -1254,7 +1272,7 @@
     function addToLeads(email, name) {
       let leads = JSON.parse(localStorage.getItem(getProjectKey("my_leads")) || "[]");
       if (!leads.find((l) => l.email === email)) {
-        leads.push({ email, nome: name });
+        leads.push({ email, name });
         localStorage.setItem(getProjectKey("my_leads"), JSON.stringify(leads));
         showAlert(`✅ ${name} adicionado à lista!`, "success");
         refreshLeadsList();
@@ -1268,7 +1286,14 @@
       const container = document.getElementById("leads-list");
 
       if (leads.length === 0) {
-        container.innerHTML = "<p>Nenhum lead adicionado ainda.</p>";
+        const lang = getCurrentLanguage();
+        const messages = {
+          pt: "Nenhuma fundação adicionada ainda.",
+          en: "No foundations added yet.",
+          es: "Sin fundaciones añadidas aún.",
+          fr: "Aucune fondation ajoutée pour l'instant."
+        };
+        container.innerHTML = `<p>${messages[lang] || messages.pt}</p>`;
         return;
       }
 
@@ -1282,7 +1307,7 @@
               .map(
                 (lead, i) => `
               <tr>
-                <td>${lead.nome}</td>
+                <td>${lead.name}</td>
                 <td>${lead.email}</td>
                 <td><button onclick="removeFromLeads(${i})">🗑️ Remover</button></td>
               </tr>`
@@ -1351,7 +1376,7 @@
         document.getElementById("create-campaign-form").reset();
         refreshCampaignsList();
       } catch (error) {
-        console.error(error);
+        console.error(error); showAlert("❌ Erro na busca.", "error");
       }
     });
 
@@ -1395,7 +1420,7 @@
 
         document.getElementById("stat-campaigns").textContent = result.campaigns.length;
       } catch (error) {
-        console.error(error);
+        console.error(error); showAlert("❌ Erro na busca.", "error");
       }
     }
 
@@ -1414,7 +1439,7 @@
         showAlert(`✅ ${result.result.success} emails enviados!`, "success");
         refreshCampaignsList();
       } catch (error) {
-        console.error(error);
+        console.error(error); showAlert("❌ Erro na busca.", "error");
       }
     }
 
@@ -1430,7 +1455,7 @@
           showAlert("⚠️ Configure RESEND_API_KEY para enviar emails reais", "warning");
         }
       } catch (error) {
-        console.error(error);
+        console.error(error); showAlert("❌ Erro na busca.", "error");
       }
     });
 
@@ -1454,7 +1479,7 @@
         document.getElementById("create-page-form").reset();
         refreshPagesList();
       } catch (error) {
-        console.error(error);
+        console.error(error); showAlert("❌ Erro na busca.", "error");
       }
     });
 
@@ -1500,7 +1525,7 @@
 
         document.getElementById("stat-pages").textContent = result.pages.length;
       } catch (error) {
-        console.error(error);
+        console.error(error); showAlert("❌ Erro na busca.", "error");
       }
     }
 
@@ -1520,7 +1545,7 @@
         const result = await apiCall("/campaigns/settings", "POST", settings);
         showAlert("✅ Configurações salvas!", "success");
       } catch (error) {
-        console.error(error);
+        console.error(error); showAlert("❌ Erro na busca.", "error");
       }
     });
 
@@ -1535,7 +1560,7 @@
           : '<span class="badge warning">Não configurado</span>';
         document.getElementById("email-status").innerHTML = `Status: ${status}`;
       } catch (error) {
-        console.error(error);
+        console.error(error); showAlert("❌ Erro na busca.", "error");
       }
     }
 
