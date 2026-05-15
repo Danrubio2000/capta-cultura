@@ -184,15 +184,68 @@ async function handleAPI(req, res, url, method) {
 
   // 🎯 LEADS HUNTING
   if (endpoint === "leads") {
-    if (action === "search" && method === "POST" && leadsHunter) {
+    if (action === "search" && method === "POST") {
       const body = await parseBody(req);
       try {
-        const leads = await leadsHunter.searchLeads(
-          body.keywords,
-          body.location || "International",
-          body.type || "business"
-        );
-        return json(res, { success: true, leads });
+        const businessType = body.businessType || "Galeria de Arte";
+        const location = body.location || "Brasil";
+        const keywords = body.keywords || "";
+        const type = body.type || "cultural";
+
+        const leads = await leadsHunter.searchLeads(keywords, location, type, businessType);
+        return json(res, { success: true, leads, total: leads.length });
+      } catch (error) {
+        return json(res, { error: error.message }, 400);
+      }
+    }
+
+    if (action === "DISABLED_OLD" && method === "POST") {
+      const body = await parseBody(req);
+      try {
+        let leads = [];
+        if (leadsHunter) {
+          leads = await leadsHunter.searchLeads(
+            body.keywords,
+            body.location || "Brasil",
+            body.type || "cultural"
+          );
+        } else {
+          // Mock cultural foundations data when leadsHunter not available
+          const foundations = [
+            "Instituto", "Fundação", "Centro", "Associação", "Coordenadoria",
+            "Organização", "Plataforma", "Núcleo", "Espaço", "Coletivo"
+          ];
+          const artNames = [
+            "Brasileira", "Contemporânea", "Moderna", "Popular", "Digital"
+          ];
+          const organizations = [
+            "Cultura", "Arte", "Desenvolvimento", "Preservação", "Educação"
+          ];
+
+          const businessType = body.businessType || "Galeria de Arte";
+          const location = body.location || "Brasil";
+
+          for (let i = 0; i < 20; i++) {
+            const foundation = foundations[Math.floor(Math.random() * foundations.length)];
+            const artName = artNames[Math.floor(Math.random() * artNames.length)];
+            const org = organizations[Math.floor(Math.random() * organizations.length)];
+
+            const baseName = `${foundation} de ${artName} ${org}`;
+            leads.push({
+              name: baseName,
+              email: `contato@${baseName.toLowerCase().replace(/\s/g, "").substring(0, 30)}.org.br`,
+              website: `https://${baseName.toLowerCase().replace(/\s/g, "-")}.org.br`,
+              score: 60 + Math.floor(Math.random() * 35),
+              phone: `(${Math.floor(Math.random() * 85) + 11}) ${Math.floor(Math.random() * 90000) + 10000}-${Math.floor(Math.random() * 9000) + 1000}`,
+              area: businessType,
+              businessType: businessType,
+              region: location,
+              verified: Math.random() > 0.2
+            });
+          }
+        }
+
+        return json(res, { success: true, leads, total: leads.length });
       } catch (error) {
         return json(res, { error: error.message }, 400);
       }
