@@ -6,21 +6,28 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// COMPREHENSIVE FOUNDATION DATABASE - 500+ Realistic Results
-// Generated from public data sources
+// COMPREHENSIVE CULTURAL FOUNDATION DATABASE - Dynamic Generation
+// Generates realistic cultural institutions based on configured type
 
-function generateFoundationLeads(region = "Brasil") {
+function generateCulturalLeads(businessType = "Galeria de Arte", region = "Brasil") {
   const foundations = [
     "Instituto", "Fundação", "Centro", "Associação", "Coordenadoria",
     "Organização", "Plataforma", "Núcleo", "Espaço", "Coletivo"
   ];
 
-  const areas = [
-    "Artes Visuais", "Música", "Dança", "Teatro", "Cinema",
-    "Literatura", "Patrimônio", "Arquitetura", "Design", "Fotografia",
-    "Educação Artística", "Cultura Digital", "Preservação", "Pesquisa",
-    "Inovação Cultural", "Audiovisual", "Artes Performáticas", "Curadoria"
-  ];
+  // Areas mapping by business type
+  const areasMap = {
+    "Galeria de Arte": ["Arte Contemporânea", "Arte Moderna", "Arte Digital", "Arte Clássica", "Fotografia", "Escultura", "Instalação", "Arte Urbana"],
+    "Escola de Música": ["Música Clássica", "Jazz", "Música Popular", "Produção Musical", "Canto", "Instrumentos", "Composição", "Performance"],
+    "Companhia de Dança": ["Dança Contemporânea", "Dança Clássica", "Dança Folclórica", "Dança Urbana", "Coreografia", "Performance", "Circo", "Teatro de Movimento"],
+    "Companhia de Teatro": ["Teatro Clássico", "Teatro Moderno", "Teatro de Rua", "Teatro Infantil", "Dramaturgia", "Performance", "Comédia", "Drama"],
+    "Produtora de Cinema": ["Cinema Documentário", "Ficção", "Animação", "Curta-metragem", "Roteiro", "Edição", "Produção Audiovisual", "Cinema Experimental"],
+    "Biblioteca": ["Acervo Histórico", "Literatura Contemporânea", "Pesquisa", "Preservação", "Catalogação", "Educação", "Eventos Literários", "Arquivo Digital"],
+    "Museu": ["Arte Sacra", "História Natural", "Arqueologia", "Antropologia", "Arte Moderna", "Ciência", "Educação", "Restauração"],
+    "Centro Cultural": ["Cultura Geral", "Desenvolvimento Comunitário", "Educação Artística", "Preservação", "Pesquisa", "Inovação", "Expressão", "Patrimônio"]
+  };
+
+  const areas = areasMap[businessType] || ["Artes Visuais", "Música", "Dança", "Teatro", "Cinema"];
 
   const states = ["São Paulo", "Rio de Janeiro", "Minas Gerais", "Bahia", "Santa Catarina"];
   const cities = ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Salvador", "Florianópolis", "Curitiba", "Brasília"];
@@ -36,6 +43,7 @@ function generateFoundationLeads(region = "Brasil") {
     "Pesquisa", "Inovação", "Criatividade", "Expressão", "Patrimônio"
   ];
 
+  const emailDomain = ["org", "org.br", "com.br", "net.br"][Math.floor(Math.random() * 4)];
   const leads = [];
 
   for (let i = 0; i < 150; i++) {
@@ -48,7 +56,6 @@ function generateFoundationLeads(region = "Brasil") {
 
     const baseName = `${foundation} de ${artName} ${org}`;
     const baseScore = 60 + Math.floor(Math.random() * 35);
-    const emailDomain = ["org", "org.br", "com.br", "net.br"][Math.floor(Math.random() * 4)];
     const phone = `(${Math.floor(Math.random() * 85) + 11}) ${Math.floor(Math.random() * 90000) + 10000}-${Math.floor(Math.random() * 9000) + 1000}`;
 
     leads.push({
@@ -58,6 +65,7 @@ function generateFoundationLeads(region = "Brasil") {
       score: baseScore,
       phone: phone,
       area: area,
+      businessType: businessType,
       region: region,
       state: state,
       city: city,
@@ -71,41 +79,39 @@ function generateFoundationLeads(region = "Brasil") {
   return leads;
 }
 
-// Generate comprehensive databases
-const foundationLeads = {
-  "brasil": generateFoundationLeads("Brasil"),
-  "são paulo": generateFoundationLeads("São Paulo"),
-  "rio de janeiro": generateFoundationLeads("Rio de Janeiro"),
-  "minas gerais": generateFoundationLeads("Minas Gerais"),
-  "bahia": generateFoundationLeads("Bahia")
-};
+// Cache for generated cultural leads by business type and region
+const culturalLeadsCache = {};
 
-function getMockFoundations(keywords, location) {
-  const searchKey = keywords.toLowerCase();
+function getCachedCulturalLeads(businessType, region) {
+  const cacheKey = `${businessType}_${region}`;
+  if (!culturalLeadsCache[cacheKey]) {
+    culturalLeadsCache[cacheKey] = generateCulturalLeads(businessType, region);
+  }
+  return culturalLeadsCache[cacheKey];
+}
+
+function getMockFoundations(businessType = "Galeria de Arte", location = "Brasil") {
   const searchLocation = location.toLowerCase();
 
   // Map locations
   const locationMap = {
-    "brasil": "brasil",
-    "sp": "são paulo",
-    "rj": "rio de janeiro",
-    "mg": "minas gerais",
-    "ba": "bahia",
-    "são paulo": "são paulo",
-    "rio de janeiro": "rio de janeiro",
-    "minas gerais": "minas gerais",
-    "bahia": "bahia"
+    "brasil": "Brasil",
+    "sp": "São Paulo",
+    "rj": "Rio de Janeiro",
+    "mg": "Minas Gerais",
+    "ba": "Bahia",
+    "sc": "Santa Catarina",
+    "são paulo": "São Paulo",
+    "rio de janeiro": "Rio de Janeiro",
+    "minas gerais": "Minas Gerais",
+    "bahia": "Bahia",
+    "santa catarina": "Santa Catarina"
   };
 
-  const normalizedLocation = locationMap[searchLocation] || "brasil";
+  const normalizedLocation = locationMap[searchLocation] || "Brasil";
 
-  // Return all foundations for the location
-  if (foundationLeads[normalizedLocation]) {
-    return foundationLeads[normalizedLocation];
-  }
-
-  // Fallback
-  return foundationLeads["brasil"] || [];
+  // Return foundations based on business type and location
+  return getCachedCulturalLeads(businessType, normalizedLocation);
 }
 
 function parseBody(req) {
@@ -163,15 +169,15 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify({ ok: true }));
     } else if (pathname === "/api/leads/search" && req.method === "POST") {
       const body = await parseBody(req);
-      const { keywords = "", location = "Brasil", type = "all" } = body;
+      const { keywords = "", location = "Brasil", type = "all", businessType = "Galeria de Arte" } = body;
 
-      const leads = getMockFoundations(keywords, location);
+      const leads = getMockFoundations(businessType, location);
 
       res.writeHead(200);
       res.end(JSON.stringify({
         leads,
         total: leads.length,
-        query: { keywords, location, type }
+        query: { keywords, location, type, businessType }
       }));
     } else {
       res.writeHead(404);

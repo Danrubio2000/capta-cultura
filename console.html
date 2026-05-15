@@ -854,6 +854,10 @@
           <input type="text" id="settings-project-name" placeholder="Nome do projeto" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Times New Roman', Times, serif;">
         </div>
         <div style="margin-bottom: 15px;">
+          <label style="display: block; margin-bottom: 5px; font-weight: bold;" data-i18n="label-business-type">💼 Tipo de Negócio ou Serviço Cultural</label>
+          <input type="text" id="settings-business-type" placeholder="Ex: Dentista, Advogado, Encanador, Professor de Yoga, Galeria de Arte, etc" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Times New Roman', Times, serif;">
+        </div>
+        <div style="margin-bottom: 15px;">
           <label style="display: block; margin-bottom: 5px; font-weight: bold;" data-i18n="label-website">🌐 Website</label>
           <input type="url" id="settings-website" placeholder="https://seu-site.com" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Times New Roman', Times, serif;">
         </div>
@@ -1079,6 +1083,7 @@
     function loadProjectSettings() {
       const settings = JSON.parse(localStorage.getItem(getProjectKey('settings')) || '{}');
       document.getElementById('settings-project-name').value = settings.projectName || '';
+      document.getElementById('settings-business-type').value = settings.businessType || '';
       document.getElementById('settings-website').value = settings.website || '';
       document.getElementById('settings-email').value = settings.email || '';
       document.getElementById('settings-phone').value = settings.phone || '';
@@ -1094,6 +1099,7 @@
 
       const settings = {
         projectName: document.getElementById('settings-project-name').value,
+        businessType: document.getElementById('settings-business-type').value,
         website: document.getElementById('settings-website').value,
         email: document.getElementById('settings-email').value,
         phone: document.getElementById('settings-phone').value,
@@ -1186,13 +1192,18 @@
       const location = document.getElementById("search-location").value;
       const type = document.getElementById("search-type").value;
 
+      // Get business type from project settings
+      const settings = JSON.parse(localStorage.getItem(getProjectKey('settings')) || '{}');
+      const businessType = settings.businessType || "Galeria de Arte";
+
       showAlert("🔍 Buscando leads...", "info");
 
       try {
         const result = await apiCall("/leads/search", "POST", {
           keywords,
           location,
-          type
+          type,
+          businessType
         });
 
         searchResults = result.leads;
@@ -1612,6 +1623,7 @@
         "btn-create": "Criar Projeto",
         "modal-settings-title": "⚙️ Configurações do Projeto",
         "label-project-name": "📝 Nome do Projeto",
+        "label-business-type": "💼 Tipo de Negócio ou Serviço Cultural",
         "label-website": "🌐 Website",
         "label-email": "📧 Email",
         "label-phone": "📱 Telefone",
@@ -1648,6 +1660,7 @@
         "btn-create": "Create Project",
         "modal-settings-title": "⚙️ Project Settings",
         "label-project-name": "📝 Project Name",
+        "label-business-type": "💼 Type of Business or Cultural Service",
         "label-website": "🌐 Website",
         "label-email": "📧 Email",
         "label-phone": "📱 Phone",
@@ -1684,6 +1697,7 @@
         "btn-create": "Crear Proyecto",
         "modal-settings-title": "⚙️ Configuración del Proyecto",
         "label-project-name": "📝 Nombre del Proyecto",
+        "label-business-type": "💼 Tipo de Negocio o Servicio Cultural",
         "label-website": "🌐 Sitio Web",
         "label-email": "📧 Correo Electrónico",
         "label-phone": "📱 Teléfono",
@@ -1720,6 +1734,7 @@
         "btn-create": "Créer un Projet",
         "modal-settings-title": "⚙️ Paramètres du Projet",
         "label-project-name": "📝 Nom du Projet",
+        "label-business-type": "💼 Type d'Entreprise ou de Service Culturel",
         "label-website": "🌐 Site Web",
         "label-email": "📧 Email",
         "label-phone": "📱 Téléphone",
