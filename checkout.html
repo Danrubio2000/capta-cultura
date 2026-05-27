@@ -406,14 +406,14 @@
         return;
       }
 
-      // Salva os dados e redireciona para Stripe
+      // Salva os dados do cliente
       localStorage.setItem('checkout_plan', selectedPlan);
       localStorage.setItem('checkout_email', email);
       localStorage.setItem('checkout_name', name);
       localStorage.setItem('checkout_price', selectedPrice);
 
-      // Redireciona para página de pagamento
-      window.location.href = '/payment?plan=' + selectedPlan + '&email=' + encodeURIComponent(email);
+      // Redireciona para pagamento Mercado Pago
+      window.location.href = 'https://mpago.la/1py3Tgc';
     }
 
     // Fechar modal ao clicar fora
